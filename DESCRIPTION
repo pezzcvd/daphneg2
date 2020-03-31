@@ -12,6 +12,7 @@ LazyData: true
 RoxygenNote: 7.1.0
 Depends: R (>= 2.10)
 Imports:
-    checkmate
+    checkmate,
+    MASS
 Suggests: 
     testthat (>= 2.1.0)

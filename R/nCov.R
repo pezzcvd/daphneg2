@@ -1,0 +1,105 @@
+#' nCov
+#'
+#' Internal function. It writes input files for GWAS analysis in case of multivariate analysis
+#' with more covariate.
+#'
+#' @param nc.input character{1}. Name of the parameter of interest.
+#' @param nc.table dataframe. Either phenotypical or environmental.
+#' @param xp numeric{1}- Phenotype values.
+#' @param xn numeric{1}. Phenotype non-null positions.
+#' @param nc.pw character{1}. Output path. (default home folder).
+#'
+#' @return
+#' @export phenotype, genotype, covariate and model files. These are going to be the input files
+#' for GWAS analysis
+#' @importFrom stats lm
+#' @importFrom MASS stepAIC
+#'
+#' @noRd
+#'
+nCov = function(nc.input, nc.table, xp, xn, nc.pw = normalizePath("~")) {
+
+  # Input controls
+  checkmate::assert_character(x = nc.input, any.missing = F, len = 1)
+  checkmate::assert_data_frame(x = nc.table)
+  checkmate::assertNumeric(x = xp, len = 1131)
+  checkmate::assertNumeric(x = xn, max.len = 1131)
+
+  #debug_msg("Starting nCov function. \n")
+
+  # First filtering. Removing ecotypes where phenotype has NAs.
+
+  # x collects only the non-missing values from phenotype
+  # cofCompl represents the whole collection of phenotypical/environmental data, where
+  # ecotypes corresponding to NAs in phenotype are removed.
+  x = xp[xn]
+  cofCompl = nc.table[xn,]
+  print(dim(cofCompl))
+  #debug_msg("First filtering \n")
+
+  # Fitting linear model
+  #debug_msg("Fitting linear model 1000 times \n")
+  #debug_msg("Second filtering \n")
+  #debug_msg("Applying Akaike's information criterion \n")
+
+  # Random subsetting of 10 covariates, further filtering of the ecotypes in order to remove
+  # all ecotypes from the chosen parameters, building of a linear model and scoring of the model
+  # through Akaike's information criterion
+  # It is retained the best model out of 1000
+  modelsSet = list()
+  for (i in 1:1000) {
+    cofSub2 = cofCompl[,sample(1:ncol(cofCompl), 10)]
+    print(sample(1:ncol(cofCompl), 10))
+    newdf2 = as.data.frame(cbind("y" = x, cofSub2))
+    newdf2 = newdf2[!is.na(rowMeans(newdf2)),]
+    print(head(newdf2))
+    full2 = lm(y ~ ., data = newdf2)
+    print(full2)
+    # Aikake's information criterion
+    modelsSet[[i]] = stepAIC(full2)
+    full2 = NULL
+  }
+
+  #debug_msg("Selecting the best model \n")
+  bestN = which.min(sapply(1:length(modelsSet), function(x)
+    min(modelsSet[[x]]$anova$AIC)))
+  bestModel = modelsSet[[bestN]]
+
+  #debug_msg(paste0("Parameter dimensions before filtering. ", length(xp), " \n"))
+  #debug_msg(paste0("Parameter dimensions after first filtering. ", length(x), " \n"))
+  #debug_msg(paste0("Parameter dimensions after linear model fitting. ", length(bestModel$model$y), " \n"))
+
+  # Covariate vector is identified: fitted values of the best model
+  #debug_msg("Checking normality \n")
+  y = normal(bestModel$model$y)
+  cv = normal(bestModel$fitted.values)
+
+  # Writing phenotype, covariate, model files
+  write.table(y, paste0(nc.pw, "/pheno_", nc.input, "_all"), sep = "\n",
+              quote = F, row.names = F, col.names = F)
+  #debug_msg("Phenotype file written \n")
+
+
+  write.table(as.data.frame(cbind(1, cv)), paste0(nc.pw, "/covar_", nc.input, "_all"),
+              sep = "\t", quote = F, row.names = F, col.names = F)
+  #debug_msg("Covariate file written \n")
+  write.table(bestModel$model, paste0(nc.pw, "/model_", nc.input, "_all"), sep = "\t", quote = F)
+  #debug_msg("Model file written \n")
+
+  # Genotype filtering
+  #debug_msg(paste0("Genotype table dimensions before filtering.
+  #               ", nrow(genotype), " X ", ncol(genotype), " \n"))
+  acces = rownames(bestModel$model)
+  col1 <- append(c("snpID", "alt", "ref"), acces)
+  g1 <- genotype[,colnames(genotype) %in% col1]
+  #debug_msg(paste0("Genotype table dimensions after filtering.
+  #                ", nrow(g1), " X ", ncol(g1), " \n"))
+
+  # Writing genotype
+  write.table(g1, paste0(nc.pw,"/geno_", nc.input, "_all"), sep = ", ",
+              row.names = F, col.names = F, quote = F)
+  #debug_msg("Genotype file written \n")
+
+  #debug_msg("nCov function completed successfully \n")
+  return()
+}
