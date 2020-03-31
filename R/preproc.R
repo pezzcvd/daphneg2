@@ -15,9 +15,11 @@
 #'
 #' @return NULL. It strarts the preprocessing prodedure and it calls either "univariate" or
 #' "multivariate" in order to produce GWAS files.
-#' @noRd
+#' @export
 #'
 #' @examples
+#' gen = system.file("extdata", "example_geno.RData", package = "daphneg2")
+#' preproc("CO_Spring", "E", gen)
 preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.pw = normalizePath("~")) {
   # Loading genotype information
   checkmate::assert_file(pp.geno)

@@ -3,6 +3,7 @@
 export(add_param)
 export(hello)
 export(infos)
+export(preproc)
 export(set_backup)
 export(synchro)
 import(checkmate)
