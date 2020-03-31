@@ -1,6 +1,11 @@
 #' preproc
 #'
-#' Internal function. Starts the procedure for proprocessing analysis.
+#' The function proprocesses data for GWAS analysis. It distinguishes among five different
+#' modes of preprocessing. Two of them target the univariate analysis: "E" for environmental
+#' target parameter and "P" if the target is phenotypical.
+#' THe latter three start a multivariate analysis: "PxP" phenotype target and phenotype
+#' covariate, ExE for environmental target and environmental covariate and "PxE" for
+#' phenotypical target and environmental covariate respectively.
 #'
 #' @param pp.par character. Name of the parameter of interest.
 #' @param pp.option character. Label for which kind of analysis is needed (P, E, PxP, ExE, PxE)

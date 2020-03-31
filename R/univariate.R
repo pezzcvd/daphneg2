@@ -13,7 +13,7 @@
 #'
 #' @return NULL. It's called by the preprocessing prodedure and it automatically writes
 #' phenotype and genotype files for GWAS in case of univariate analysis.
-#' @export
+#' @noRd
 #'
 #'
 #'

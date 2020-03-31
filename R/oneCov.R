@@ -1,7 +1,8 @@
 #' oneCov
 #'
-#' Internal function. It writes input files for GWAS analysis in case of multivariate analysis
-#' with one covariate.
+#' #' Internal function. It matches non-missing phenotype values with covariates,
+#' it retrieves the corresponding genotipic information and writes genotype, phenotype and
+#' covariate files that will be fed to the GWAS analysis software.
 #'
 #' @param oc.input character{1}. Name of the parameter of interest.
 #' @param oc.par character{1}. Name of the covariate parameter.

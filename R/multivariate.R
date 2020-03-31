@@ -1,6 +1,13 @@
 #' multivariate
 #'
-#' Internal intermediate function. Starts the procedure for multivariate analysis.
+#' #' Internal intermediate function. Starts the preprocessing procedure for
+#' multivariate analysis. It differenciates between three possibilities (PxP, ExE, PxE),
+#' phenotype target and phenotype covariate; environmental target and environmental covariate and
+#' phenotypical target and environmental covariate respectively.
+#' The covariate vector is selected among two options as well, either specifying one covariate
+#' parameter (that must be present in the list of env/phn parameters) or considering the best
+#' subselection among all parameters (this last option not available for PxP mode because of
+#' data sparsity problem).
 #'
 #' @param mv.input character{1}. Name of the parameter of interest.
 #' @param mv.par character{1}. Name of the covariate parameter.

@@ -1,7 +1,12 @@
 #' nCov
 #'
-#' Internal function. It writes input files for GWAS analysis in case of multivariate analysis
-#' with more covariate.
+#' Internal function. It filters out missing values from phenotype target.
+#' Then it selects the best multiple covariate model. Each model subselects 10 random
+#' covariates and calculates the AIC (information score). The best model will be the one
+#' with the highest information content among 1000 models.
+#' It retrieves the corresponding genotipic information and writes genotype, phenotype,
+#' covariate (best model fitted values vector) and the model files that will be fed
+#' to the GWAS analysis software.
 #'
 #' @param nc.input character{1}. Name of the parameter of interest.
 #' @param nc.table dataframe. Either phenotypical or environmental.
