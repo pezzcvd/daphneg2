@@ -11,9 +11,8 @@
 #' @param xn numeric{1}. Phenotype non-null positions.
 #' @param oc.pw character{1}. Output path. (default home folder).
 #'
-#' @return
-#' @export phenotype, genotype and covariate files. These are going to be the input files
-#' for GWAS analysis
+#' @return NULL. Phenotype, genotype and covariate files are produced. These are going to be
+#' the input files for GWAS analysis
 #'
 #' @noRd
 #'
