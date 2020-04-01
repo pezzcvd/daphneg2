@@ -36,6 +36,11 @@ gwas(
 NULL. It automatically performs the whole GWAS analysis procedure.
 }
 \description{
-it performs a gwas analysis, creating first the corresponding kinship matrix,
-finding associations, correcting p-values and storing results.
+it performs a gwas analysis. It collects all the input files: phenotype, genotype and,
+in case, covariate. Then through the software GEMMA it calculates the kinship matrix,
+and it performs the assosiaction analysis.
+Subsequently it adujsts the P-values of the associations, calculating FDRs and since the
+genotype table is based on a pruned SNP list (meaning that the SNPs that are inherited
+together with a target SNPs are filtered out) it eventually retrieves the lists of SNPs
+in the same LD units with the significant SNPs in the result table.
 }

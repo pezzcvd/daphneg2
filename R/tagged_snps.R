@@ -1,13 +1,19 @@
 #' tagged_snpns
 #'
-#' @param tg.input
-#' @param tg.pw
-#' @return
+#' Internal function. It extends the result table, adding entries for SNPs that were
+#' originally pruned out, because in linkage disequilibrium with another SNP in the genotype
+#' table.
+#'
+#' @param tg.input character{1}. Parameter name, used as a prefix in the files of interest.
+#' @param tg.tags character{1}. File name with the list of tagged SNPs from the LD analysis.
+#' @param tg.pw character{1}. Output path. (default home folder).
+#' @return NULL. It updates the GWAS result file.
 #'
 #' @noRd
-tagged_snps = function(tg.input, tg.pw){
-  tags = read.delim("/home/pejo/plink1-09/tests/test_tagged02.tags.list",
-                    stringsAsFactors = F)
+tagged_snps = function(tg.input, tg.tags, tg.pw){
+  #tags = read.delim("/home/pejo/plink1-09/tests/test_tagged02.tags.list",
+  #                  stringsAsFactors = F)
+  tags = read.delim(tg.tags, stringsAsFactors = F)
   print("load")
   assoc = read.delim(paste0(tg.pw, "/daphneg_results/", tg.input, "_dir/out_", tg.input, ".assoc.txt"),
                      stringsAsFactors = F)

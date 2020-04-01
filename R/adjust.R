@@ -1,10 +1,11 @@
 #' adjust
 #'
-#' Internal function, it provides adjusted p-values for
-#' GWAS results
+#' Internal function. It adds adjusted P-values to the result table. The function adjustment
+#' is calulated with False Discovery Rate values, calculated with Benjamin-Hochberg and
+#' Benjamin-Yetutiely methods.
 #'
 #' @param adj.par character{1}. Parameter name, used as a prefix in the files of interest.
-#' @param adj.pw
+#' @param adj.pw character{1}. Output path. (default home folder).
 #' @return NULL. It updates the GWAS result file with two more columns.
 #'
 #' @importFrom stats p.adjust
