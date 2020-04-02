@@ -53,10 +53,10 @@ add_param = function(ap.newparam,ap.metadata, ap.mode = F, ap.bk = normalizePath
 
   ## Controls on input parameters
   # Controls on ap.newparam as string
-  checkmate::assert_character(ap.newparam, len = 1, pattern = ".csv")
+  checkmate::assert_string(ap.newparam, pattern = ".csv")
   checkmate::assert_file(x = ap.newparam)
   # Controls on ap.metadata
-  checkmate::assert_character(x = ap.metadata, len = 1, pattern = "_meta.csv")
+  checkmate::assert_string(x = ap.metadata, pattern = "_meta.csv")
   checkmate::assert_file(x = ap.metadata)
 
   # Sets the newparam name without the extension

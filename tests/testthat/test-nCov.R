@@ -3,7 +3,7 @@ test_that("nc.input is integer", {
   par3 = environmental
   par4 = environmental$CO_Spring[1:50]
   par5 = environmental$ET[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 test_that("nc.input is boolean", {
@@ -11,7 +11,7 @@ test_that("nc.input is boolean", {
   par3 = environmental
   par4 = environmental$CO_Spring[1:50]
   par5 = environmental$ET[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 test_that("nc.input is longer vector", {
@@ -19,7 +19,7 @@ test_that("nc.input is longer vector", {
   par3 = environmental
   par4 = environmental$CO_Spring[1:50]
   par5 = environmental$ET[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 
@@ -29,7 +29,7 @@ test_that("nc.table is integer", {
   par3 = 1
   par4 = environmental$CO_Spring[1:50]
   par5 = environmental$ET[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 test_that("nc.table is boolean", {
@@ -37,7 +37,7 @@ test_that("nc.table is boolean", {
   par3 = T
   par4 = environmental$CO_Spring[1:50]
   par5 = environmental$ET[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 test_that("nc.table is string", {
@@ -45,7 +45,7 @@ test_that("nc.table is string", {
   par3 = "environmental"
   par4 = environmental$CO_Spring[1:50]
   par5 = environmental$ET[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 test_that("nc.table is wrong table", {
@@ -53,7 +53,7 @@ test_that("nc.table is wrong table", {
   par3 = ecotypes
   par4 = environmental$CO_Spring[1:50]
   par5 = environmental$ET[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 
@@ -63,7 +63,7 @@ test_that("xp is single integer", {
   par3 = environmental
   par4 = 1
   par5 = environmental$ET[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 test_that("xp is boolean", {
@@ -71,7 +71,7 @@ test_that("xp is boolean", {
   par3 = environmental
   par4 = T
   par5 = environmental$ET[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 test_that("xp is string", {
@@ -79,7 +79,7 @@ test_that("xp is string", {
   par3 = environmental
   par4 = "ciao"
   par5 = environmental$ET[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 
@@ -89,7 +89,7 @@ test_that("xn is single integer", {
   par3 = environmental
   par5 = 1
   par4 = environmental$CO_Spring[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 test_that("xn is boolean", {
@@ -97,7 +97,7 @@ test_that("xn is boolean", {
   par3 = environmental
   par5 = T
   par4 = environmental$CO_Spring[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })
 
 test_that("xn is string", {
@@ -105,5 +105,5 @@ test_that("xn is string", {
   par3 = environmental
   par5 = "ciao"
   par4 = environmental$CO_Spring[1:50]
-  testthat::expect_error(object = oneCov(par1,  par3, par4, par5))
+  testthat::expect_error(object = nCov(par1,  par3, par4, par5))
 })

@@ -16,6 +16,16 @@
 #' @noRd
 #'
 gemma = function(g.input, g.gemma, g.cv, g.annot, g.miss, g.maf, g.pw = normalizePath("~")) {
+  # Input controls
+  checkmate::assert_string(x = g.input)
+  checkmate::assert_string(x = g.gemma)
+  checkmate::assert_choice(x = g.cv, choices = c(0,1,2), null.ok = F)
+  checkmate::assert_string(x = g.annot)
+  checkmate::assert_file(x = g.annot)
+  checkmate::assert_numeric(x = g.miss)
+  checkmate::assert_numeric(x = g.maf)
+  checkmate::assert_string(x = g.pw)
+
   # Looks for the path of gemma executable.
   #/home/pejo/gemma-0.98.1-linux-static
   #gemma = list.files(path = normalizePath("~"), pattern = gemma.name,

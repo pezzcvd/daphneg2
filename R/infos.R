@@ -22,7 +22,7 @@
 #'
 infos = function(i.input) {
   # Control on function input
-  checkmate::assert_character(x = i.input, any.missing = F, len = 1)
+  checkmate::assert_string(x = i.input)
   # POSSIBLY ADD A MESSAGE
   checkmate::assert_choice(x = i.input, choices = c(env_explain$ID, phn_explain$ID))
   #debug_msg("Starting infos function \n")

@@ -25,7 +25,7 @@
 nCov = function(nc.input, nc.table, xp, xn, nc.pw = normalizePath("~")) {
 
   # Input controls
-  checkmate::assert_character(x = nc.input, any.missing = F, len = 1)
+  checkmate::assert_string(x = nc.input)
   checkmate::assert_data_frame(x = nc.table)
   checkmate::assertNumeric(x = xp, len = 1131)
   checkmate::assertNumeric(x = xn, max.len = 1131)

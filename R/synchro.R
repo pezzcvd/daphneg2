@@ -27,8 +27,8 @@
 #'
 synchro = function(s.mode = T, s.bk = normalizePath("~"), s.version = "current"){
   #debug_msg("Starting synchro function \n")
-  checkmate::assert_character(x = s.bk, len = 1, null.ok = F)
-  checkmate::assert_character(x = s.version, len = 1, null.ok = F)
+  checkmate::assert_string(x = s.bk, null.ok = F)
+  checkmate::assert_string(x = s.version, null.ok = F)
 
   bk = set_backup(s.bk)
 

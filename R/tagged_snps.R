@@ -11,6 +11,11 @@
 #'
 #' @noRd
 tagged_snps = function(tg.input, tg.tags, tg.pw){
+  # Input controls
+  checkmate::assert_string(x = tg.input)
+  checkmate::assert_string(x = tg.tags)
+  checkmate::assert_file(x = tg.tags)
+  checkmate::assert_string(x = tg.pw)
   #tags = read.delim("/home/pejo/plink1-09/tests/test_tagged02.tags.list",
   #                  stringsAsFactors = F)
   tags = read.delim(tg.tags, stringsAsFactors = F)

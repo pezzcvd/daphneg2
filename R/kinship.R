@@ -14,9 +14,9 @@
 #'
 kinship = function(k.input, k.gemma, k.pw = normalizePath("~")) {
   # Input controls
-  checkmate::assert_character(x = k.input, any.missing = F, len = 1)
-  checkmate::assert_character(x = k.gemma, any.missing = F, len = 1)
-  checkmate::assert_character(x = k.pw, any.missing = F, len = 1)
+  checkmate::assert_string(x = k.input)
+  checkmate::assert_string(x = k.gemma)
+  checkmate::assert_string(x = k.pw)
 
   # Looks for the path of gemma executable.
   #/home/pejo/gemma-0.98.1-linux-static

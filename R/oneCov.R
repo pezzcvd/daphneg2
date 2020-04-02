@@ -19,8 +19,8 @@
 #'
 oneCov = function (oc.input, oc.par, oc.table, x, xn, oc.pw = normalizePath("~")) {
   # Controls on input
-  checkmate::assert_character(x = oc.input, any.missing = F, len = 1)
-  checkmate::assert_character(x = oc.par, any.missing = F, len = 1)
+  checkmate::assert_string(x = oc.input)
+  checkmate::assert_string(x = oc.par)
   checkmate::assert_data_frame(x = oc.table)
   checkmate::assertNumeric(x = x, len = 1131)
   checkmate::assertNumeric(x = xn, max.len = 1131)

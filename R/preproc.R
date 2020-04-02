@@ -39,7 +39,7 @@ preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.pw = normalizeP
     # Those have to be checked in all cases
     # pheno table and parameter of interest (same as before)
     checkmate::assert_data_frame(x = pp.pheno)
-    checkmate::assert_character(x = pp.par, any.missing = F, len = 1)
+    checkmate::assert_string(x = pp.par)
     checkmate::assert_choice(x = pp.par, choices = colnames(pp.pheno))
 
     # Call

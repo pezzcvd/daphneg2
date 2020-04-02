@@ -26,12 +26,12 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 
   #debug_msg("Starting gwas function. \n")
 
   # Input controls
-  checkmate::assert_character(x = gw.input, any.missing = F, len = 1)
+  checkmate::assert_string(x = gw.input)
   checkmate::assert_choice(gw.cv, choices = 0:2, null.ok = F)
   checkmate::assert_choice(x = gw.cov, null.ok = T,
                            choices = c(colnames(environmental), colnames(phenotypical)))
-  checkmate::assert_character(x = gemma.name, any.missing = F, len = 1)
-  checkmate::assert_character(x = gw.pw, any.missing = F, len = 1)
+  checkmate::assert_string(x = gemma.name)
+  checkmate::assert_string(x = gw.pw)
 
   # Setting up initial parameters.
   # Suffix depending on number of covariates.
@@ -60,29 +60,28 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 
 
 
   #GWAS
-  #gemma(input_name, gemma, gw.annot, gw.miss, gw.maf, gw.pw)
+  gemma(input_name, gemma, gw.annot, gw.miss, gw.maf, gw.pw)
 
-  if (gw.cv > 0) {
-    system(paste0(gemma, " -g ", gw.pw, "/geno_", input_name,
-                  " -p  ", gw.pw, "/pheno_", input_name,
-                  " -k  ", gw.pw, "/output/kinship_", input_name, ".cXX.txt",
-                  " -c  ", gw.pw, "/covar_", input_name,
-                  " -a  ", gw.annot,
-                  " -miss ", gw.miss, " -maf ", gw.maf,
-                  " -lmm 1 -o out_", input_name,
-                  " -outdir ", gw.pw,"/output"))
+#  if (gw.cv > 0) {
+#    system(paste0(gemma, " -g ", gw.pw, "/geno_", input_name,
+#                  " -p  ", gw.pw, "/pheno_", input_name,
+#                  " -k  ", gw.pw, "/output/kinship_", input_name, ".cXX.txt",
+#                  " -c  ", gw.pw, "/covar_", input_name,
+#                  " -a  ", gw.annot,
+#                  " -miss ", gw.miss, " -maf ", gw.maf,
+#                  " -lmm 1 -o out_", input_name,
+#                  " -outdir ", gw.pw,"/output"))
 
-  } else {
-    system(paste0(gemma, " -g  ", gw.pw, "/geno_", input_name,
-                  " -p  ", gw.pw, "/pheno_", input_name,
-                  " -k  ", gw.pw, "/output/kinship_", input_name, ".cXX.txt",
-                  " -a  ", gw.annot,
-                  " -miss ", gw.miss, " -maf ", gw.maf,
-                  " -lmm 1 -o out_", input_name,
-                  " -outdir ", gw.pw,"/output"))
-  }
+#  } else {
+#    system(paste0(gemma, " -g  ", gw.pw, "/geno_", input_name,
+#                  " -p  ", gw.pw, "/pheno_", input_name,
+#                  " -k  ", gw.pw, "/output/kinship_", input_name, ".cXX.txt",
+#                  " -a  ", gw.annot,
+#                  " -miss ", gw.miss, " -maf ", gw.maf,
+#                  " -lmm 1 -o out_", input_name,
+#                  " -outdir ", gw.pw,"/output"))
+#  }
   #debug_msg("GWAS analysis completed. \n")
-
 
   # Adjusting P-values
   adjust(input_name, gw.pw)
