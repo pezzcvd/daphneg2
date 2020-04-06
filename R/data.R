@@ -32,3 +32,26 @@
 #'
 #' @format An object of type \code{data.frame}
 "phn_explain"
+
+
+
+#' arapheno_example
+#'
+#' arapheno_example detailed description2
+#'
+#' @format An object of type \code{data.frame}
+"arapheno_example"
+
+#' gemma_annot_example
+#'
+#' gemma_annot_example detailed description2
+#'
+#' @format An object of type \code{data.frame}
+"gemma_annot_example"
+
+#' geno_example
+#'
+#' geno_example detailed description2
+#'
+#' @format An object of type \code{data.frame}
+"geno_example"

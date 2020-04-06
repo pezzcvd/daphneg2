@@ -4,11 +4,11 @@ author: "Francesco Pezzini"
 date: "15 ottobre 2019"
 #csl: frontiers-in-microbiology.csl
 output: 
-  bookdown::html_document2:
+  bookdown::pdf_document2:
     toc: yes
     toc_depth: 3
     number_sections: false
-  bookdown::pdf_document2:
+  bookdown::html_document2:
     toc: yes
     toc_depth: 3
     number_sections: false
@@ -155,9 +155,6 @@ The pruning is performed calculating LD scores (linkage disequilibirum) and iden
 
 We took care of this step beforehand, using the software plink (version 1.9) [@renteria_using_2013]. First we recoded the genotype information using .ped/.map format, then we pruned the SNPs according to their linkage disequilibrium, keeping only SNPs whose probability to be inherited together is very low and finally we tagged the variants in the same LD units with those that were kept after the pruning.
 
-```{r}
-head(tags_example)
-```
 
 ## GEMMA and gemma_annotation
 GEMMA is a software used to calculate associations for genomewide association studies. It implements linear mixed models, which help in the identification of data hierarchies and structures. 

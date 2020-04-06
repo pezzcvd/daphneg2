@@ -15,8 +15,6 @@
 #' @param nc.pw character{1}. Output path. (default home folder).
 #'
 #' @return
-#' @export phenotype, genotype, covariate and model files. These are going to be the input files
-#' for GWAS analysis
 #' @importFrom stats lm
 #' @importFrom MASS stepAIC
 #'

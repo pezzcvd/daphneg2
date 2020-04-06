@@ -9,6 +9,7 @@
 #' in the same LD units with the significant SNPs in the result table.
 #'
 #' @param gemma.name character{1}. Gemma executable name. Version or system may vary.
+#' @param tag.file file with tags.
 #' @param gw.input character{1}. Parameter name, used as a prefix in the files of interest.
 #' @param gw.cv integer{1}. Number of covariates. Can be 0, 1 or 2 (in this case is meant >1).
 #' @param gw.annot annotation
@@ -22,7 +23,7 @@
 #' @import filesstrings
 #'
 #' @examples
-gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 0.05, gw.maf = 0.05, gw.pw = normalizePath("~")) {
+gwas = function(gemma.name, tag.file, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 0.05, gw.maf = 0.05, gw.pw = normalizePath("~")) {
   #debug_msg("Starting gwas function. \n")
 
   # Input controls
@@ -47,20 +48,23 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 
     suf = "_all"
   }
 
+  print(gw.cv)
+
+
   # Looks for the path of gemma executable.
-  gemma = list.files(path = normalizePath("~"), pattern = gemma.name,
+  gemman = list.files(path = gw.pw, pattern = gemma.name,
                      recursive = T, full.names = T)[1]
-  print(gemma)
+  print(gemman)
   input_name = paste0(gw.input, suf)
   print(input_name)
 
 
   # Kinship
-  kinship(input_name, gemma, gw.pw)
+  kinship(input_name, gemman, gw.pw)
 
 
   #GWAS
-  gemma(input_name, gemma, gw.annot, gw.miss, gw.maf, gw.pw)
+  gemma(input_name, gemman, gw.cv, gw.annot, gw.miss, gw.maf, gw.pw)
 
 #  if (gw.cv > 0) {
 #    system(paste0(gemma, " -g ", gw.pw, "/geno_", input_name,
@@ -88,7 +92,7 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 
   #debug_msg("P-values adjusted \n")
 
   # Expanding results to tagged SNPs
-  tagged_snps(input_name, gw.pw)
+  tagged_snps(input_name, tag.file, gw.pw)
 
   print("create res folder")
   # Files/folders management
