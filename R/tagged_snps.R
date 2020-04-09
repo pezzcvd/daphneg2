@@ -20,7 +20,7 @@ tagged_snps = function(tg.input, tg.tags, tg.pw){
   #                  stringsAsFactors = F)
   tags = read.delim(tg.tags, stringsAsFactors = F)
   print("load")
-  assoc = read.delim(paste0(tg.pw, "/daphneg_results/", tg.input, "_dir/out_", tg.input, ".assoc.txt"),
+  assoc = read.delim(paste0(tg.pw, "/output/out_", tg.input, ".assoc.txt"),
                      stringsAsFactors = F)
   hits = assoc$rs[assoc$p_wald < 10e-5 & assoc$rs %in% tags$SNP]
 
@@ -44,7 +44,7 @@ tagged_snps = function(tg.input, tg.tags, tg.pw){
 
   print("writing")
   write.table(tagged_assoc,
-              paste0(tg.pw, "/daphneg_results/", tg.input, "_dir/out_", tg.input, ".assoc.tagged.txt"),
+              paste0(tg.pw, "/output/out_", tg.input, ".assoc.tagged.txt"),
               sep = "\t", quote = F, row.names = F)
   return()
 }
