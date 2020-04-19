@@ -380,4 +380,7 @@ Also with this functions three plots are produced: one for the non-adjusted P va
 The P-values distribution is simply an histogram representing the P-values of a specific experiment. The x-axis is binned in intervals of width 0.1. Also this plot helps to visualize the result of the experiment.
 
 
+## Summary report
+
+
 # Bibliography
