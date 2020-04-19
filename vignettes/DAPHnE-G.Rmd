@@ -356,12 +356,28 @@ Finally the extaned result table is saved, not updating the previous table but r
 
 
 ## Quality checking
-This section functionality is to assess the quality of the study. This is achieved through the usual GWAS graphical methods: manhattan plots, qq-plots and p-value histogram distribution.
+This section functionality is to assess the quality of the study. This is achieved through GWAS graphical methods: manhattan plots, qq-plots and p-value histogram distribution.
+
+SCHEMA BELLO
 
 ### manhattan
+A manhattan plot depicts the -log(P-values) of all analyzed SNPs sorting them according to chromosome and genomic position. It's very useful to visually identify quantity and coordinates of the strongest associations, which result in the highest peaks.
 
-### qqplot
+For a target parameter are produced three Manhattan plots: one with non-adjusted P-values and two with adjusted ones. For these latter are used Benjamini-Hochberg (BH) and Benjamini-Yekutieli (BY) adjustments.
 
-### histogram
+For each of the plots three significance thresholds are highlighted: 1e-5, 1e-6 and 1e-7 for the non-adjusted P-values; 0.2, 0.1 and 0.05 for BH case and 0.1, 0.05, 0.01 for BY case.
+In both adjusted P-value cases the thresholds represent the False Discovery Rate (FDR), e.g. threshold of 0.05 equals an FDR of 5%.
+
+### qq_plot
+A QQ plot represents the deviation of the observed P-values (in negavite log scale) of a specific experiment from the expected ones which should follow an uniform distribution.
+Given that for a successful GWAS experiment we expect just an minority of the SNPs to show the association, this little set should be vizualized as a small divergind tail on the right part of the plot.
+
+The expected values are simulated dividing the interval [0,1] into n qeually spaced bins, where n is the number of SNPs analyzed and transforming those values in negative logs; the observed values are the negative logs of the sorted list of P values.
+
+Also with this functions three plots are produced: one for the non-adjusted P values and two for the two sets of adjusted ones.
+
+### pval_distribution
+The P-values distribution is simply an histogram representing the P-values of a specific experiment. The x-axis is binned in intervals of width 0.1. Also this plot helps to visualize the result of the experiment.
+
 
 # Bibliography
