@@ -60,8 +60,10 @@ add_param = function(ap.newparam,ap.metadata, ap.mode = F, ap.bk = normalizePath
   checkmate::assert_file(x = ap.metadata)
 
   # Sets the newparam name without the extension
-  par_name = substr(ap.newparam, 1, nchar(ap.newparam) - 4)
-  meta_name = substr(ap.metadata, 1, nchar(ap.metadata) - 9)
+  par_name = strsplit(ap.newparam, "/")[[1]][length(strsplit(ap.newparam, "/")[[1]])]
+  par_name = substr(par_name, 1, nchar(par_name) - 4)
+  meta_name = strsplit(ap.metadata, "/")[[1]][length(strsplit(ap.metadata, "/")[[1]])]
+  meta_name = substr(meta_name, 1, nchar(meta_name) - 9)
 
   # Control on par_name
   checkmate::assert_true(par_name == meta_name)

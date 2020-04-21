@@ -10,6 +10,9 @@
 #'
 #' @examples
 qq_plot = function(qq.par, qq.pw = normalizePath("~")){
+  # Loading updated dataset
+  load(paste0(qq.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
+
   # Input controls
   checkmate::assert_character(x = qq.par, any.missing = F, len = 1)
 

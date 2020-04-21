@@ -4,7 +4,7 @@
 \alias{synchro}
 \title{synchro}
 \usage{
-synchro(s.mode = T, s.bk = normalizePath("~"), s.version = "current")
+synchro(s.mode = F, s.bk = normalizePath("~"), s.version = "current")
 }
 \arguments{
 \item{s.mode}{Flag. F (default) for phenotypical parameter, T for environmental.}

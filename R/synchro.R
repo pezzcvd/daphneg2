@@ -25,7 +25,7 @@
 #' synchro(s.mode = TRUE)
 #'
 #'
-synchro = function(s.mode = T, s.bk = normalizePath("~"), s.version = "current"){
+synchro = function(s.mode = F, s.bk = normalizePath("~"), s.version = "current"){
   #debug_msg("Starting synchro function \n")
   checkmate::assert_string(x = s.bk, null.ok = F)
   checkmate::assert_string(x = s.version, null.ok = F)
@@ -38,13 +38,13 @@ synchro = function(s.mode = T, s.bk = normalizePath("~"), s.version = "current")
   checkmate::assert_logical(x = s.mode, len = 1, null.ok = F)
   if (s.mode) {
     #debug_msg("Environmental. Define updated files. \n")
-    tmp = read.csv(paste0(bk, "/environmental_", s.version, ".csv"), stringsAsFactors = F)
+    tmp = read.csv(paste0(bk, "/environmental_", s.version, ".csv"), row.names = 1, stringsAsFactors = F)
     tmpx = read.csv(paste0(bk, "/env_explain_", s.version, ".csv"), stringsAsFactors = F)
     s.table = environmental
     s.explain = env_explain
   } else {
     #debug_msg("Phenotypical. Define updated files. \n")
-    tmp = read.csv(paste0(bk, "/phenotypical_", s.version, ".csv"), stringsAsFactors = F)
+    tmp = read.csv(paste0(bk, "/phenotypical_", s.version, ".csv"), row.names = 1, stringsAsFactors = F)
     tmpx = read.csv(paste0(bk, "/phn_explain_", s.version, ".csv"), stringsAsFactors = F)
     s.table = phenotypical
     s.explain = phn_explain
@@ -71,6 +71,8 @@ synchro = function(s.mode = T, s.bk = normalizePath("~"), s.version = "current")
     } else {
       phenotypical = tmp
       phn_explain = tmpx
+      #phenotypical = usethis::use_data(phenotypical, overwrite = T)
+      #phn_explain = usethis::use_data(phn_explain, overwrite = T)
     }
 
     save(ecotypes, environmental, env_explain, phenotypical, phn_explain,

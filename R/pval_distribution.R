@@ -10,6 +10,9 @@
 #'
 #' @examples
 pval_distrubution = function(h.par, h.pw = normalizePath("~")){
+  # Loading updated dataset
+  load(paste0(h.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
+
   # Input controls
   checkmate::assert_character(x = h.par, any.missing = F, len = 1)
 

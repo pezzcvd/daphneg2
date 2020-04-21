@@ -11,6 +11,9 @@
 #'
 #' @examples
 manhattan = function(mh.par, mh.pw = normalizePath("~")) {
+  # Loading updated dataset
+  load(paste0(mh.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
+
   # Input controls
   checkmate::assert_character(x = mh.par, any.missing = F, len = 1)
 
