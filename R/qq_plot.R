@@ -1,4 +1,4 @@
-#' QQplot
+#' qq_plot
 #'
 #' it plots the qq plot corresponding to the requested parameter.
 #'
@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-QQplot = function(qq.par, qq.pw = normalizePath("~")){
+qq_plot = function(qq.par, qq.pw = normalizePath("~")){
   # Input controls
   checkmate::assert_character(x = qq.par, any.missing = F, len = 1)
 

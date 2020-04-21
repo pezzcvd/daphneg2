@@ -211,6 +211,11 @@ and the program tracks the parameter to the IDs of either env_explain or phn_exp
 
 If the ID is not yet present in the dataset an error is reported, so we should first add the new parameter to the dataset, synchronize the system, and finally we will be able to print our information.
 
+*examples*
+
+infos(i.input = "CO_Spring")
+
+
 ### set_backup
 This is an internal use function. It is called by *add_param* and *synchro* to check the status of the backup archive.
 The function takes as an argument the path of the backup archive (by default set to home directory).
@@ -222,6 +227,13 @@ Then four tests are performed:
 - Is there a RData folder? It will be created if needed.
 - Is also this folder populated? Two RData files are expected. The genotypes are kept separately because the table is very big, computationally demanding and not always needed. Moreover it doesn't need to be updated.
 
+*examples*
+
+set_backup(sb.dest = "/home/user")
+
+
+
+
 ### add_param
 *Add_param* is the first of the two steps needed for adding a new parameter to the parameter list tables.
 The input files are the new parameter data file, the new parameter metadata file (both *.csv* format. see the **Data** section), an environmental-mode flag: False (default) stands for phenotypic analysis and True enables environmental analysis and the backup folder path.
@@ -231,6 +243,11 @@ The first operation is to set the correct tables according to the mode.
 Then after checking that the files meet the format requirements the newparam file (data) is filtered out from non-supported ecotypes and duplicates, its values are fitted in the format of our data repository and finally added to it. The same is done with metadata file.
 
 Finally the four backup files are written - two of them are tagged with the creation date (they will count as archive) and other two are tagged with "_current" and they are going to overwrite the previous ones. In this way the "_current.csv" files are always refering to the most up to date version of the core dataset.
+
+*examples*
+
+add_param(ap.newparam = "../inst/extdata/example_add_param.csv", ap.metadata = "../inst/extdata/example_add_param_meta.csv",ap.mode = T)
+
 
 
 ### synchro
@@ -246,6 +263,12 @@ Finally all the tables of the newly updated core dataset are saved in the RData 
 
 To sum up the data() provided with the package are the original version of the dataset and they could be restored if needed. While all the files in the "backups" folder - RData and .csv files - form a double check procedure to ensure the system is always updated.
 The choiche to keep a backup archive was taken to have the possibility to synchronize the dataset to a previous version, in case a user notices some mistakes in a putative intermediate to last step.
+
+*examples*
+
+- synchro()
+- synchro(s.mode = F)
+
 
 
 ## preprocessing
@@ -269,6 +292,16 @@ We have in total five options:
 Moreover, in case of multivariate analysis, the user can choose to specify one covariate of interest (*oneCov* case, it has to be present in the core dataset), or ask the system to evaluate the best subset of covariates among the whole collection, *nCov* case. 
 
 Once one of the five options is identified, the corresponding tables are selected and the process for *univariate* or *multivariate* is initiated through teh corresponding function.
+
+*examples* 
+
+- preproc(pp.par = "CO_Spring", pp.option = "E", pp.geno ="inst/extdata/example_geno.RData")
+- preproc(pp.par = "100_4W", pp.option = "P", pp.geno ="inst/extdata/example_geno.RData")
+- preproc(pp.par = "CO_Spring", pp.option = "ExE", pp.geno ="inst/extdata/example_geno.RData", pp.cvt = "ET")
+- preproc(pp.par = "100_4W", pp.option = "PxP", pp.geno ="inst/extdata/example_geno.RData", pp.cvt = "101_Li7")
+- preproc(pp.par = "100_4W", pp.option = "PxE", pp.geno ="inst/extdata/example_geno.RData", pp.cvt = "CO_Spring")
+
+
 
 ### Normal
 This is an internal function called in both univariate and multivariate data preprocessing functions in order to ensure the normality condition.
@@ -335,6 +368,13 @@ The program needs also an annotation file: which contains snpID, chromosome and 
 
 Plus some additional parameters are provided with a default value (that the user can change): missingness and minor allele frequency.
 
+*examples*
+
+- gwas(gemma.name = "gemma-0.98.1-linux-static", tag.file = "inst/extdata/tags_example.list", gw.input = "CO_Spring", gw.cv = 0, gw.annot = "inst/extdata/gemma_annot_example.csv")
+- gwas(gemma.name = "gemma-0.98.1-linux-static", tag.file = "inst/extdata/tags_example.list", gw.input = "CO_Spring", gw.cv = 1, gw.annot = "inst/extdata/gemma_annot_example.csv",gw.cov = "ET")
+- gwas(gemma.name = "gemma-0.98.1-linux-static", tag.file = "inst/extdata/tags_example.list", gw.input = "CO_Spring", gw.cv = 2, gw.annot = "inst/extdata/gemma_annot_example.csv",gw.cov = "all")
+
+
 
 ### kinship
 Kinship is a relatedness matrix, which measures the degree of similarity among the different ecotypes. This calculation is also taken care of with the GEMMA software.
@@ -368,6 +408,11 @@ For a target parameter are produced three Manhattan plots: one with non-adjusted
 For each of the plots three significance thresholds are highlighted: 1e-5, 1e-6 and 1e-7 for the non-adjusted P-values; 0.2, 0.1 and 0.05 for BH case and 0.1, 0.05, 0.01 for BY case.
 In both adjusted P-value cases the thresholds represent the False Discovery Rate (FDR), e.g. threshold of 0.05 equals an FDR of 5%.
 
+*examples*
+
+manhattan(mh.par = "CO_Spring")
+
+
 ### qq_plot
 A QQ plot represents the deviation of the observed P-values (in negavite log scale) of a specific experiment from the expected ones which should follow an uniform distribution.
 Given that for a successful GWAS experiment we expect just an minority of the SNPs to show the association, this little set should be vizualized as a small divergind tail on the right part of the plot.
@@ -376,8 +421,17 @@ The expected values are simulated dividing the interval [0,1] into n qeually spa
 
 Also with this functions three plots are produced: one for the non-adjusted P values and two for the two sets of adjusted ones.
 
+*examples*
+
+qq_plot(qq.par = "CO_Spring")
+
+
 ### pval_distribution
 The P-values distribution is simply an histogram representing the P-values of a specific experiment. The x-axis is binned in intervals of width 0.1. Also this plot helps to visualize the result of the experiment.
+
+*examples*
+
+pval_distribution(h.par = "CO_Spring")
 
 
 ## Summary report

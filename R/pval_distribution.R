@@ -1,4 +1,4 @@
-#' hist_distr
+#' pval_distribution
 #'
 #' it plots the histogram distribution corresponding to the requested parameter.
 #'
@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-hist_distr = function(h.par, h.pw = normalizePath("~")){
+pval_distrubution = function(h.par, h.pw = normalizePath("~")){
   # Input controls
   checkmate::assert_character(x = h.par, any.missing = F, len = 1)
 
