@@ -32,6 +32,9 @@ synchro = function(s.mode = F, s.bk = normalizePath("~"), s.version = "current")
 
   bk = set_backup(s.bk)
 
+  # Loading updated dataset
+  load(paste0(bk, "/RData/complete_dataset.RData"))
+
   # Set initial parameters and tables depending if the analysis is environmental (s.mode = 1) or phenotypical
   # tmp and tmpx are the current versions, coming from the last run of add_param()
   # s.table and s.explain are the Rd tables in the dataset

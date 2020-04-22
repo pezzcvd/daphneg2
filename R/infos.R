@@ -7,6 +7,7 @@
 #' use the add_param function and then try again.
 #'
 #' @param i.input Character. Parameter to print.
+#' @param i.pw character{1}. Output path. (default home folder).
 #'
 #' @return Detailed information for the selected environmental/phenotypical parameter
 #' @export
@@ -20,7 +21,10 @@
 #' infos("87_LN16")
 #'
 #'
-infos = function(i.input) {
+infos = function(i.input, i.pw = normalizePath("~")) {
+  # Loading updated dataset
+  load(paste0(i.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
+
   # Control on function input
   checkmate::assert_string(x = i.input)
   # POSSIBLY ADD A MESSAGE
