@@ -20,7 +20,7 @@
 univariate = function(uv.par, uv.pheno, genotype, uv.pw = normalizePath("~")) {
   # input controls
   checkmate::assert_character(x = uv.par, any.missing = F, len = 1)
-  checkmate::assert_choice(x = uv.par, choices = c(env_explain$ID, phn_explain$ID), null.ok = F)
+  #checkmate::assert_choice(x = uv.par, choices = c(env_explain$ID, phn_explain$ID), null.ok = F)
   checkmate::assert_data_frame(x = uv.pheno)
   #checkmate::assert_choice(x = uv.pheno, choices = c(environmental, phenotypical), null.ok = F)
   checkmate::assert_character(x = uv.pw, any.missing = F, len = 1)
