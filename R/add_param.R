@@ -86,7 +86,7 @@ add_param = function(ap.newparam,ap.metadata, ap.mode = F, ap.bk = normalizePath
   ## Real thing
   # Filtering the new parameter
   # Removing unwanted accession_ids (accessions not present in core dataset)
-  tmpv = ap.newparam[ap.newparam$accession_id %in% rownames(old_table), ]
+  tmpv = ap.newparam[ap.newparam$accession_id %in% old_table$rownames, ]
   #debug_msg(paste0("Filter out accession IDs that are not in the core dataset.
   #                 Dimensions of the parameter of interest after first filtering
   #                 ", nrow(tmpv), " x ", ncol(tmpv), " \n"))
