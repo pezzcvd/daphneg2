@@ -4,7 +4,7 @@ test_that("infos has the correct input", {
   testthat::expect_vector(object = infos(out))
 
   # Correct phn paramenter
-  out = "100_4W"
+  out = "4W_100"
   testthat::expect_vector(object = infos(out))
 
   # Parameter is a number

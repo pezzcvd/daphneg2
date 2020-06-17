@@ -4,10 +4,12 @@
 \alias{infos}
 \title{infos}
 \usage{
-infos(i.input)
+infos(i.input, i.pw = normalizePath("~"))
 }
 \arguments{
 \item{i.input}{Character. Parameter to print.}
+
+\item{i.pw}{character{1}. Output path. (default home folder).}
 }
 \value{
 Detailed information for the selected environmental/phenotypical parameter
@@ -24,7 +26,7 @@ use the add_param function and then try again.
 infos("CO_Spring")
 
 # Checking info for a phenotypical parameter.
-infos("87_LN16")
+infos("LN16_87")
 
 
 }

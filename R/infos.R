@@ -18,7 +18,7 @@
 #' infos("CO_Spring")
 #'
 #' # Checking info for a phenotypical parameter.
-#' infos("87_LN16")
+#' infos("LN16_87")
 #'
 #'
 infos = function(i.input, i.pw = normalizePath("~")) {

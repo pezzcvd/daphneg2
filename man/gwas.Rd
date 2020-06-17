@@ -6,7 +6,6 @@
 \usage{
 gwas(
   gemma.name,
-  tag.file,
   gw.input,
   gw.cv,
   gw.annot,
@@ -18,8 +17,6 @@ gwas(
 }
 \arguments{
 \item{gemma.name}{character{1}. Gemma executable name. Version or system may vary.}
-
-\item{tag.file}{file with tags.}
 
 \item{gw.input}{character{1}. Parameter name, used as a prefix in the files of interest.}
 
