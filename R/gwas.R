@@ -9,7 +9,6 @@
 #' in the same LD units with the significant SNPs in the result table.
 #'
 #' @param gemma.name character{1}. Gemma executable name. Version or system may vary.
-#' @param tag.file file with tags.
 #' @param gw.input character{1}. Parameter name, used as a prefix in the files of interest.
 #' @param gw.cv integer{1}. Number of covariates. Can be 0, 1 or 2 (in this case is meant >1).
 #' @param gw.annot annotation
@@ -23,7 +22,7 @@
 #' @import filesstrings
 #'
 #' @examples
-gwas = function(gemma.name, tag.file, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 0.05, gw.maf = 0.05, gw.pw = normalizePath("~")) {
+gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 0.05, gw.maf = 0.05, gw.pw = normalizePath("~")) {
   #debug_msg("Starting gwas function. \n")
   # Loading updated dataset
   load(paste0(gw.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
@@ -94,7 +93,7 @@ gwas = function(gemma.name, tag.file, gw.input, gw.cv, gw.annot, gw.cov = NULL, 
   #debug_msg("P-values adjusted \n")
 
   # Expanding results to tagged SNPs
-  tagged_snps(input_name, tag.file, gw.pw)
+  #tagged_snps(input_name, tag.file, gw.pw)
 
   print("create res folder")
   # Files/folders management

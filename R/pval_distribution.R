@@ -39,7 +39,7 @@ pval_distrubution = function(h.par, h.pw = normalizePath("~")){
     ggplot2::xlab("P-values") +
     ggplot2::ylab("Count")
   #dev.off()
-  ggplot2::ggsave(paste0(h.pw, "/daphneg_results/", h.par, "_dir/", h.par, "_qq.png"))
+  ggplot2::ggsave(paste0(h.pw, "/daphneg_results/", h.par, "_dir/", h.par, "_hist.png"))
   #ggsave(paste0("results/gwas/", h.par, "_dir/output/", h.par, "_hist.png"))
   return()
 }
