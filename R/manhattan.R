@@ -24,7 +24,7 @@ manhattan = function(mh.par, mh.pw = normalizePath("~")) {
   fl = read.delim(fl, stringsAsFactors = F)
 
   # File content controls
-  checkmate::assert_data_frame(x = fl, ncols = 14)
+  #checkmate::assert_data_frame(x = fl, ncols = 14)
 
   # Parameters set up, we have three analysis (nonadj, by. bh)
   # and for each of them three thresholds.
