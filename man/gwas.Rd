@@ -12,6 +12,7 @@ gwas(
   gw.cov = NULL,
   gw.miss = 0.05,
   gw.maf = 0.05,
+  gw.kinship = "",
   gw.pw = normalizePath("~")
 )
 }
@@ -29,6 +30,8 @@ gwas(
 \item{gw.miss}{missingness}
 
 \item{gw.maf}{minor allele frequency}
+
+\item{gw.kinship}{precomputed kinship file name, default ""}
 
 \item{gw.pw}{character{1}. Output path. (default home folder).}
 }

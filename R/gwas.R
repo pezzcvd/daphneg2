@@ -16,13 +16,14 @@
 #' @param gw.pw character{1}. Output path. (default home folder).
 #' @param gw.miss missingness
 #' @param gw.maf minor allele frequency
+#' @param gw.kinship precomputed kinship file name, default ""
 #'
 #' @return NULL. It automatically performs the whole GWAS analysis procedure.
 #' @export
 #' @import filesstrings
 #'
 #' @examples
-gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 0.05, gw.maf = 0.05, gw.pw = normalizePath("~")) {
+gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 0.05, gw.maf = 0.05, gw.kinship = "", gw.pw = normalizePath("~")) {
   #debug_msg("Starting gwas function. \n")
   # Loading updated dataset
   load(paste0(gw.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
@@ -61,11 +62,14 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 
 
 
   # Kinship
-  kinship(input_name, gemman, gw.pw)
+  if (gw.kinship == "") {
+    kinship(input_name, gemman, gw.pw)
+  }
+
 
 
   #GWAS
-  gemma(input_name, gemman, gw.cv, gw.annot, gw.miss, gw.maf, gw.pw)
+  gemma(input_name, gemman, gw.cv, gw.annot, gw.miss, gw.maf, gw.kinship, gw.pw)
 
 #  if (gw.cv > 0) {
 #    system(paste0(gemma, " -g ", gw.pw, "/geno_", input_name,

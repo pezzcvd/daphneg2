@@ -9,13 +9,14 @@
 #' @param g.miss missingness
 #' @param g.maf minor allele frequency
 #' @param g.pw character{1}. Output path. (default home folder).
+#' @param g.kinship precomputed kinship file name, default ""
 #'
 #' @return NULL. It automatically performs the GWAS analysis for this specific setting
 #' and writes a result table.
 #'
 #' @noRd
 #'
-gemma = function(g.input, g.gemma, g.cv, g.annot, g.miss, g.maf, g.pw = normalizePath("~")) {
+gemma = function(g.input, g.gemma, g.cv, g.annot, g.miss, g.maf, g.kinship = "", g.pw = normalizePath("~")) {
   # Input controls
   checkmate::assert_string(x = g.input)
   checkmate::assert_string(x = g.gemma)
@@ -31,11 +32,17 @@ gemma = function(g.input, g.gemma, g.cv, g.annot, g.miss, g.maf, g.pw = normaliz
   #gemma = list.files(path = normalizePath("~"), pattern = gemma.name,
   #                   recursive = T, full.names = T)[1]
 
+  if (g.kinship == "") {
+    kin = ""
+  } else {
+    kin = paste0(g.pw, "/output/kinship_", g.input, ".cXX.txt")
+  }
+
   #GWAS
   if (g.cv > 0) {
     system(paste0(g.gemma, " -g ", g.pw, "/geno_", g.input,
                   " -p  ", g.pw, "/pheno_", g.input,
-                  " -k  ", g.pw, "/output/kinship_", g.input, ".cXX.txt",
+                  " -k  ", kin,
                   " -c  ", g.pw, "/covar_", g.input,
                   " -a  ", g.annot,
                   " -miss ", g.miss, " -maf ", g.maf,
@@ -45,7 +52,7 @@ gemma = function(g.input, g.gemma, g.cv, g.annot, g.miss, g.maf, g.pw = normaliz
   } else {
     system(paste0(g.gemma, " -g  ", g.pw, "/geno_", g.input,
                   " -p  ", g.pw, "/pheno_", g.input,
-                  " -k  ", g.pw, "/output/kinship_", g.input, ".cXX.txt",
+                  " -k  ", kin,
                   " -a  ", g.annot,
                   " -miss ", g.miss, " -maf ", g.maf,
                   " -lmm 1 -o out_", g.input,

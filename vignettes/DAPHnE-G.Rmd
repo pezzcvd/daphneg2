@@ -361,7 +361,7 @@ It checks the number of covariates (0,1 or 2 = as more than 1) and sets a suffix
 
 Then it retrieves the path of GEMMA on user's computer (user has to provide the file's name, for example "gemma-0.98.1-linux-static").
 
-The next steps are kinship matrix and ssociation table calculation, which are both performed by GEMMA. (see below). The resulting P-values are then adjusted providing False Discovery Rates (FDRs) with function and finally the information about pruned SNPs is reintegrated.
+The next steps are kinship matrix and association table calculation, which are both performed by GEMMA. (see below). The resulting P-values are then adjusted providing False Discovery Rates (FDRs) with function and finally the information about pruned SNPs is reintegrated.
 
 The user is asked to provide genotype, phenotype, kinship and in case covariate files, which are supposed to be produced with the preprocessing command of DAPHnE-G.
 The program needs also an annotation file: which contains snpID, chromosome and position in base pairs; and a tags file where are saved all the lists of SNPs in the same LD unit.
@@ -370,9 +370,10 @@ Plus some additional parameters are provided with a default value (that the user
 
 *examples*
 
-- gwas(gemma.name = "gemma-0.98.1-linux-static", tag.file = "inst/extdata/tags_example.list", gw.input = "CO_Spring", gw.cv = 0, gw.annot = "inst/extdata/gemma_annot_example.csv")
-- gwas(gemma.name = "gemma-0.98.1-linux-static", tag.file = "inst/extdata/tags_example.list", gw.input = "CO_Spring", gw.cv = 1, gw.annot = "inst/extdata/gemma_annot_example.csv",gw.cov = "ET")
-- gwas(gemma.name = "gemma-0.98.1-linux-static", tag.file = "inst/extdata/tags_example.list", gw.input = "CO_Spring", gw.cv = 2, gw.annot = "inst/extdata/gemma_annot_example.csv",gw.cov = "all")
+- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.annot = "inst/extdata/gemma_annot_example.csv")
+- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.annot = "inst/extdata/gemma_annot_example.csv", gw.kinship = "inst/extdata/precomputed_kinship.txt")
+- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 1, gw.annot = "inst/extdata/gemma_annot_example.csv",gw.cov = "ET")
+- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 2, gw.annot = "inst/extdata/gemma_annot_example.csv",gw.cov = "all")
 
 
 
@@ -387,7 +388,7 @@ The script needs a phenotype and a genotype and in case of multivariate analysis
 This internal function provides an adjustment of GWAS result p-values.
 It simply loads the result file, calculate che adjustments with "benjamini-hochberg" and "benjamini-yekutieli" methods and save the file again.
 
-### tagged_snps
+### tagged_snps TO REMOVE
 It's an internal function and it adds to the result table more entries, one for each of the previously pruned SNPs that are inherited together with one of the SNPs in the original result file.
 
 First the tags file is loaded, then for each of the snps with a P-value less than 10e-5 it retrieves from the tags table the SNPs in the same LD unit and creates an entry in the extended result file with the tagged SNPs as id and the same P-value as the original tag SNP.
