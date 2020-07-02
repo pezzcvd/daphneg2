@@ -13,8 +13,8 @@
 #' @noRd
 adjust = function(adj.par, adj.pw = normalizePath("~")){    #, adj.pw = normalizePath("~")) {
   # Input controls
-  checkmate::assert_choice(x = adj.par, null.ok = T,
-                           choices = c(colnames(environmental), colnames(phenotypical)))
+  #checkmate::assert_choice(x = adj.par, null.ok = T,
+   #                        choices = c(colnames(environmental), colnames(phenotypical)))
   #checkmate::assert_character(x = adj.pw, any.missing = F, len = 1)
 
   #debug_msg("Starting adjust procedure \n")

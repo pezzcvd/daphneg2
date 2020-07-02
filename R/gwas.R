@@ -54,8 +54,9 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 
 
 
   # Looks for the path of gemma executable.
-  gemman = list.files(path = gw.pw, pattern = gemma.name,
-                     recursive = T, full.names = T)[1]
+  #gemman = list.files(path = gw.pw, pattern = gemma.name,
+   #                  recursive = T, full.names = T)[1]
+  gemman = gemma.name
   print(gemman)
   input_name = paste0(gw.input, suf)
   print(input_name)

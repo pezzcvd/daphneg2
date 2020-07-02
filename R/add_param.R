@@ -137,6 +137,7 @@ add_param = function(ap.newparam,ap.metadata, ap.mode = F, ap.bk = normalizePath
   today = gsub(":", "-", today,fixed = T)
   if(!ap.mode) {
     utils::write.csv(old_table, paste0(bk,"/phenotypical_", today, ".csv"), quote = F)
+    print(paste0(bk,"/phenotypical_", today, ".csv"))
     utils::write.csv(old_table, paste0(bk,"/phenotypical_current.csv"), quote = F)
     utils::write.csv(explain, paste0(bk, "/phn_explain_", today, ".csv"), quote = F, row.names = F)
     utils::write.csv(explain, paste0(bk,"/phn_explain_current.csv"), quote = F, row.names = F)

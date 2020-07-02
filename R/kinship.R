@@ -24,6 +24,9 @@ kinship = function(k.input, k.gemma, k.pw = normalizePath("~")) {
   #                   recursive = T, full.names = T)[1]
 
   # Calls the gemma software in order to create the kinship matrix.
+  print(paste0(k.gemma," -g ", k.pw, "/geno_", k.input,
+         " -p ", k.pw, "/pheno_", k.input,
+         " -gk 1 -o kinship_", k.input, " -outdir ", k.pw,"/output"))
   system(paste0(k.gemma," -g ", k.pw, "/geno_", k.input,
                 " -p ", k.pw, "/pheno_", k.input,
                 " -gk 1 -o kinship_", k.input, " -outdir ", k.pw,"/output"))

@@ -62,7 +62,7 @@ synchro = function(s.mode = F, s.bk = normalizePath("~"), s.version = "current")
 
   # Comparison of dimensions of the tables
   # If they match the system is already synchronized
-  if (nrow(tmp) == nrow(s.table) & nrow(tmpx) == nrow(s.explain)) {
+  if (colnames(tmp)[ncol(tmp)] == colnames(s.table)[ncol(s.table)]) {
     print("The core dataset is up to date \n")
 
   } else {

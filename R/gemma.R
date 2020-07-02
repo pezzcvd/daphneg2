@@ -33,10 +33,12 @@ gemma = function(g.input, g.gemma, g.cv, g.annot, g.miss, g.maf, g.kinship = "",
   #                   recursive = T, full.names = T)[1]
 
   if (g.kinship == "") {
-    kin = ""
-  } else {
     kin = paste0(g.pw, "/output/kinship_", g.input, ".cXX.txt")
+  } else {
+    kin = g.kinship
   }
+
+  print(kin)
 
   #GWAS
   if (g.cv > 0) {
