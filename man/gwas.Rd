@@ -10,6 +10,7 @@ gwas(
   gw.cv,
   gw.annot,
   gw.cov = NULL,
+  gw.loco = F,
   gw.miss = 0.05,
   gw.maf = 0.05,
   gw.kinship = "",
@@ -26,6 +27,8 @@ gwas(
 \item{gw.annot}{annotation}
 
 \item{gw.cov}{character{1}. Covariate name, can be one specific covariate or "all". (defalut NULL)}
+
+\item{gw.loco}{boolean(1). Leave one chromosome out approach. (default FALSE)-.}
 
 \item{gw.miss}{missingness}
 

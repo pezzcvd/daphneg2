@@ -20,14 +20,19 @@ adjust = function(adj.par, adj.pw = normalizePath("~")){    #, adj.pw = normaliz
   #debug_msg("Starting adjust procedure \n")
   #debug_msg("Reading file \n")
   fls = list.files(pattern = paste0(adj.par, ".assoc"), path = paste0(adj.pw, "/output/"), full.names = T)
-  a = read.delim(fls, stringsAsFactors = F)
-  #debug_msg("Adjusting \n")
-  a = cbind(a[,1:12], "BY" = p.adjust(a$p_wald, method = "BY"), "BH" = p.adjust(a$p_wald, method = "BH"))
 
-  #write file with corrected pvals
-  #debug_msg("Writing adjusted file \n")
-  write.table(a, fls, sep = "\t", quote = F, row.names = F)
+  for (c in 1:length(fls)) {
+    a = read.delim(fls[c], stringsAsFactors = F)
+    #debug_msg("Adjusting \n")
+    a = cbind(a[,1:12], "BY" = p.adjust(a$p_wald, method = "BY"), "BH" = p.adjust(a$p_wald, method = "BH"))
 
-  #debug_msg("Adjust function completed successfully \n")
+    #write file with corrected pvals
+    #debug_msg("Writing adjusted file \n")
+    write.table(a, fls[c], sep = "\t", quote = F, row.names = F)
+
+    #debug_msg("Adjust function completed successfully \n")
+  }
+
+
   return()
 }
