@@ -8,6 +8,7 @@
 #' @param g.annot annotation
 #' @param g.miss missingness
 #' @param g.maf minor allele frequency
+#' @param g.loco boolean(1). Leave one chromosome out approach. (default FALSE)-.
 #' @param g.pw character{1}. Output path. (default home folder).
 #' @param g.kinship precomputed kinship file name, default ""
 #'
@@ -16,7 +17,7 @@
 #'
 #' @noRd
 #'
-gemma = function(g.input, g.gemma, g.cv, g.annot, g.miss, g.maf, g.kinship = "", g.pw = normalizePath("~")) {
+gemma = function(g.input, g.gemma, g.cv, g.annot, g.miss, g.maf, g.kinship = "", g.loco = F, g.pw = normalizePath("~")) {
   # Input controls
   checkmate::assert_string(x = g.input)
   checkmate::assert_string(x = g.gemma)
@@ -32,33 +33,73 @@ gemma = function(g.input, g.gemma, g.cv, g.annot, g.miss, g.maf, g.kinship = "",
   #gemma = list.files(path = normalizePath("~"), pattern = gemma.name,
   #                   recursive = T, full.names = T)[1]
 
-  if (g.kinship == "") {
-    kin = paste0(g.pw, "/output/kinship_", g.input, ".cXX.txt")
+  if (g.loco == T) {
+    if (g.kinship == "") {
+      kin = list.files(path = paste0(g.pw, "/output"), pattern = g.input, full.names = T)
+      kin = list.files(path = paste0(g.pw, "/output"), pattern = "cXX", full.names = T)
+        paste0(g.pw, "/output/kinship_", g.input, ".cXX.txt")
+    } else {
+      kin = g.kinship
+    }
+
   } else {
-    kin = g.kinship
+    if (g.kinship == "") {
+      kin = paste0(g.pw, "/output/kinship_", g.input, ".cXX.txt")
+    } else {
+      kin = g.kinship
+    }
   }
 
   print(kin)
 
-  #GWAS
-  if (g.cv > 0) {
-    system(paste0(g.gemma, " -g ", g.pw, "/geno_", g.input,
-                  " -p  ", g.pw, "/pheno_", g.input,
-                  " -k  ", kin,
-                  " -c  ", g.pw, "/covar_", g.input,
-                  " -a  ", g.annot,
-                  " -miss ", g.miss, " -maf ", g.maf,
-                  " -lmm 1 -o out_", g.input,
-                  " -outdir ", g.pw,"/output"))
+
+  if (g.loco == T){
+    for (c in 1:5) {
+      #GWAS
+      if (g.cv > 0) {
+        system(paste0(g.gemma, " -g ", g.pw, "/geno_chr", c, "_", g.input,
+                      " -p  ", g.pw, "/pheno_", g.input,
+                      " -k  ", kin[c],
+                      " -c  ", g.pw, "/covar_", g.input,
+                      " -a  ", g.annot,
+                      " -miss ", g.miss, " -maf ", g.maf,
+                      " -lmm 1 -o out_chr", c, "_", g.input,
+                      " -outdir ", g.pw,"/output"))
+
+      } else {
+        system(paste0(g.gemma, " -g  ", g.pw, "/geno_chr", c, "_", g.input,
+                      " -p  ", g.pw, "/pheno_", g.input,
+                      " -k  ", kin,
+                      " -a  ", g.annot,
+                      " -miss ", g.miss, " -maf ", g.maf,
+                      " -lmm 1 -o out_chr", c, "_", g.input,
+                      " -outdir ", g.pw,"/output"))
+      }
+    }
 
   } else {
-    system(paste0(g.gemma, " -g  ", g.pw, "/geno_", g.input,
-                  " -p  ", g.pw, "/pheno_", g.input,
-                  " -k  ", kin,
-                  " -a  ", g.annot,
-                  " -miss ", g.miss, " -maf ", g.maf,
-                  " -lmm 1 -o out_", g.input,
-                  " -outdir ", g.pw,"/output"))
+
+    #GWAS
+    if (g.cv > 0) {
+      system(paste0(g.gemma, " -g ", g.pw, "/geno_", g.input,
+                    " -p  ", g.pw, "/pheno_", g.input,
+                    " -k  ", kin,
+                    " -c  ", g.pw, "/covar_", g.input,
+                    " -a  ", g.annot,
+                    " -miss ", g.miss, " -maf ", g.maf,
+                    " -lmm 1 -o out_", g.input,
+                    " -outdir ", g.pw,"/output"))
+
+    } else {
+      system(paste0(g.gemma, " -g  ", g.pw, "/geno_", g.input,
+                    " -p  ", g.pw, "/pheno_", g.input,
+                    " -k  ", kin,
+                    " -a  ", g.annot,
+                    " -miss ", g.miss, " -maf ", g.maf,
+                    " -lmm 1 -o out_", g.input,
+                    " -outdir ", g.pw,"/output"))
+    }
   }
+
   return()
 }
