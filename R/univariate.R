@@ -9,6 +9,7 @@
 #' @param uv.par character. Name of the parameter of interest.
 #' @param uv.pheno data.frame. Either phenotypical or environmental.
 #' @param genotype data.frame. Table with SNP occurrences among ecotypes.
+#' @param uv.loco boolean. Leave one chromosome out approach. (default FALSE).
 #' @param uv.pw character. Output path. (default home folder).
 #'
 #' @return NULL. It's called by the preprocessing prodedure and it automatically writes
@@ -17,7 +18,7 @@
 #'
 #'
 #'
-univariate = function(uv.par, uv.pheno, genotype, uv.pw = normalizePath("~")) {
+univariate = function(uv.par, uv.pheno, genotype, uv.loco = F, uv.pw = normalizePath("~")) {
   # input controls
   checkmate::assert_character(x = uv.par, any.missing = F, len = 1)
   #checkmate::assert_choice(x = uv.par, choices = c(env_explain$ID, phn_explain$ID), null.ok = F)
@@ -47,16 +48,34 @@ univariate = function(uv.par, uv.pheno, genotype, uv.pw = normalizePath("~")) {
   # Genotype filtering
   #debug_msg(paste0("Genotype table dimensions before filtering.
   #                ", nrow(genotype), " X ", ncol(genotype), " \n"))
-  col1 <- append(c("snpID", "alt", "ref"), acces)
-  g1 <- genotype[,colnames(genotype) %in% col1]
-  #debug_msg(paste0("Genotype table dimensions after filtering.
-  #                ", nrow(g1), " X ", ncol(g1), " \n"))
 
-  # Writing genotype file
-  write.table(g1, paste(uv.pw,"/geno_", uv.par, sep = ""), sep = ", ",
-              row.names = F, col.names = F, quote = F)
-  #debug_msg("Phenotype file written \n")
+  #LOCO
+  if (uv.loco == T) {
+    for (i in 1:5) {
+      #g1 <- genotype[substr(genotype$snpID, 4, 4) == i, colnames(genotype) %in% col1]
+      #g2 <- genotype[substr(genotype$snpID, 4, 4) != i, colnames(genotype) %in% col1]
+      g1 <- genotype[substr(genotype$snpID, 4, 4) == i,]
+      g2 <- genotype[substr(genotype$snpID, 4, 4) != i,]
 
-  #debug_msg("Univariate function completed successfully \n")
+      write.table(g1, paste(uv.pw,"/geno_chr", i, "_", uv.par, sep = ""), sep = ", ",
+                  row.names = F, col.names = F, quote = F)
+      write.table(g2, paste(uv.pw,"/geno_notchr", i, "_", uv.par, sep = ""), sep = ", ",
+                  row.names = F, col.names = F, quote = F)
+
+    }
+  } else {
+    col1 <- append(c("snpID", "alt", "ref"), acces)
+    g1 <- genotype[,colnames(genotype) %in% col1]
+    #debug_msg(paste0("Genotype table dimensions after filtering.
+    #                ", nrow(g1), " X ", ncol(g1), " \n"))
+
+    # Writing genotype file
+    write.table(g1, paste(uv.pw,"/geno_", uv.par, sep = ""), sep = ", ",
+                row.names = F, col.names = F, quote = F)
+    #debug_msg("Phenotype file written \n")
+
+    #debug_msg("Univariate function completed successfully \n")
+  }
+
   return()
 }

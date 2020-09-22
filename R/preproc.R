@@ -11,6 +11,7 @@
 #' @param pp.option character. Label for which kind of analysis is needed (P, E, PxP, ExE, PxE)
 #' @param pp.geno character. Rdata file with genotype information.
 #' @param pp.cvt character. Name of the covariate. (default NULL)
+#' @param pp.loco boolean. Leave one chromosome out approach. (default FALSE).
 #' @param pp.pw character. Output path. (default home folder).
 #'
 #' @return NULL. It strarts the preprocessing prodedure and it calls either "univariate" or
@@ -20,7 +21,7 @@
 #' @examples
 #' gen = system.file("extdata", "example_geno.RData", package = "daphneg2")
 #' preproc("CO_Spring", "E", gen)
-preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.pw = normalizePath("~")) {
+preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.loco = F, pp.pw = normalizePath("~")) {
   # Loading updated dataset
   load(paste0(pp.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
   # Loading genotype information
@@ -45,7 +46,7 @@ preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.pw = normalizeP
     checkmate::assert_choice(x = pp.par, choices = colnames(pp.pheno))
 
     # Call
-    univariate(uv.par = pp.par, uv.pheno = pp.pheno,genotype = genotype,  uv.pw = pp.pw)
+    univariate(uv.par = pp.par, uv.pheno = pp.pheno,genotype = genotype,  uv.pw = pp.pw, uv.loco = pp.loco)
   }
 
   # Multivariate options
