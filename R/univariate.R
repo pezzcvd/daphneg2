@@ -51,15 +51,15 @@ univariate = function(uv.par, uv.pheno, genotype, uv.loco = F, uv.pw = normalize
 
   #LOCO
   if (uv.loco == T) {
-    for (i in 1:5) {
+    for (c in 1:5) {
       #g1 <- genotype[substr(genotype$snpID, 4, 4) == i, colnames(genotype) %in% col1]
       #g2 <- genotype[substr(genotype$snpID, 4, 4) != i, colnames(genotype) %in% col1]
-      g1 <- genotype[substr(genotype$snpID, 4, 4) == i,]
-      g2 <- genotype[substr(genotype$snpID, 4, 4) != i,]
+      g1 <- genotype[substr(genotype$snpID, 4, 4) == c,]
+      g2 <- genotype[substr(genotype$snpID, 4, 4) != c,]
 
-      write.table(g1, paste(uv.pw,"/geno_chr", i, "_", uv.par, sep = ""), sep = ", ",
+      write.table(g1, paste(uv.pw,"/geno_chr", c, "_", uv.par, sep = ""), sep = ", ",
                   row.names = F, col.names = F, quote = F)
-      write.table(g2, paste(uv.pw,"/geno_notchr", i, "_", uv.par, sep = ""), sep = ", ",
+      write.table(g2, paste(uv.pw,"/geno_notchr", c, "_", uv.par, sep = ""), sep = ", ",
                   row.names = F, col.names = F, quote = F)
 
     }

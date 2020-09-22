@@ -4,7 +4,14 @@
 \alias{preproc}
 \title{preproc}
 \usage{
-preproc(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.pw = normalizePath("~"))
+preproc(
+  pp.par,
+  pp.option,
+  pp.geno,
+  pp.cvt = NULL,
+  pp.loco = F,
+  pp.pw = normalizePath("~")
+)
 }
 \arguments{
 \item{pp.par}{character. Name of the parameter of interest.}
@@ -14,6 +21,8 @@ preproc(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.pw = normalizePath("~"))
 \item{pp.geno}{character. Rdata file with genotype information.}
 
 \item{pp.cvt}{character. Name of the covariate. (default NULL)}
+
+\item{pp.loco}{boolean. Leave one chromosome out approach. (default FALSE).}
 
 \item{pp.pw}{character. Output path. (default home folder).}
 }

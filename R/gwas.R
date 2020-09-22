@@ -13,6 +13,7 @@
 #' @param gw.cv integer{1}. Number of covariates. Can be 0, 1 or 2 (in this case is meant >1).
 #' @param gw.annot annotation
 #' @param gw.cov character{1}. Covariate name, can be one specific covariate or "all". (defalut NULL)
+#' @param gw.loco boolean(1). Leave one chromosome out approach. (default FALSE)-.
 #' @param gw.pw character{1}. Output path. (default home folder).
 #' @param gw.miss missingness
 #' @param gw.maf minor allele frequency
@@ -23,7 +24,8 @@
 #' @import filesstrings
 #'
 #' @examples
-gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 0.05, gw.maf = 0.05, gw.kinship = "", gw.pw = normalizePath("~")) {
+gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.loco = F,
+                gw.miss = 0.05, gw.maf = 0.05, gw.kinship = "", gw.pw = normalizePath("~")) {
   #debug_msg("Starting gwas function. \n")
   # Loading updated dataset
   load(paste0(gw.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
@@ -64,9 +66,8 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.miss = 
 
   # Kinship
   if (gw.kinship == "") {
-    kinship(input_name, gemman, gw.pw)
+    kinship(input_name, gemman, gw.loco, gw.pw)
   }
-
 
 
   #GWAS

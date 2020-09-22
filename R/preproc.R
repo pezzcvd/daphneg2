@@ -46,7 +46,7 @@ preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.loco = F, pp.pw
     checkmate::assert_choice(x = pp.par, choices = colnames(pp.pheno))
 
     # Call
-    univariate(uv.par = pp.par, uv.pheno = pp.pheno,genotype = genotype,  uv.pw = pp.pw, uv.loco = pp.loco)
+    univariate(uv.par = pp.par, uv.pheno = pp.pheno, genotype = genotype,  uv.loco = pp.loco, uv.pw = pp.pw)
   }
 
   # Multivariate options
