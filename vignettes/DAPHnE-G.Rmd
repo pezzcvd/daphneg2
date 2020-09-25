@@ -36,7 +36,7 @@ DAPHnE-G or Deep *Arabidopsis* PHenotypical and Environmental GWAS, is an R pipe
 
 The tool is quite modular and flexible and it will suite plant biologists who work with *A.thaliana*, as DAPHnE-G is taylored specifically for this organism. On the other hand the modularity of the structure could allow the implementation of other data repositories for different organisms.
 
-The pipeline has been developed in order to collect and automatize part of the analysis used in the *SNPstar* webserver. This is a database/data repository that aims to characterize the mutations of different ecotypes of *A.thaliana*. A part of this characterization involves association studies.
+The pipeline has been developed in order to collect and automatize part of the analysis used in the *SNPstar* webserver. This is a comprehensive database/data repository that aims to characterize the ecotypes of *A.thaliana* as for mutations, associations and differences in sequences and strutures are concerned. Among the provided resouces it has been developed also a tool to calculate associations with phnotypical and environmental traits.
 
 
 # Requirements
@@ -47,9 +47,9 @@ For development and testing the following packages have been exploited: devtools
 The GWAS analysis is carried out by the tool GEMMA (version 0.98.1) [@zhou_genome-wide_2012].
 
 ## System requirements and stats
-The package has been developed on a Linux machine with Ubuntu-16.04 LTS, with 4 processors Intel® Core™ i5-3210M CPU @ 2.50GHz, 8Gb of RAM.
+The package has been developed on a Linux machine with Ubuntu-16.04 LTS, with 4 processors Intel® Core™ i5-3210M CPU @ 2.50GHz, 8Gb of RAM. Since the amount of data that are going to be analysed is quite massive - over 3 milion SNPs and over 1000 ecotypes - we recommend to run the application on a powerful machine.
 
-ADD INFO ABOUT TIME AND RESOURCES
+One complete run needs approximately 50Gb of RAM and the processing with 20 cores lasts 30 minutes.
 
 ## Installation
 To install DAPHnE-G it's enough to install the devtools package on your R and subsequently install the package from the corresponding Git repository:
@@ -64,6 +64,14 @@ To install DAPHnE-G it's enough to install the devtools package on your R and su
 - install_github("pezzcvd/daphneg2")
 - library(daphneg2)
 
+# List of tables
+
+- Ecotypes
+- Environmental parameters
+- Environmental metadata
+- Phenotypic traits
+- Phenotypic metadata
+- Genotypic information (SNP occurrence matrix)
 
 # Data
 DAPHnE-G data repository consists of 8 tables (5 included in the package plus 3 external): a description of the ecotypes; a collection of environmental parameters and corresponding metadata; the phenotypic traits also with metadata, the genotypic information (SNP occurrence matrix), the linkage disequilibrium SNP blocks and an additional summary of SNP positions. The latter three tables can be downloaded from the address: http://141.48.9.71/ 
@@ -110,7 +118,7 @@ The field "species" should always correspond to **Arabidopsis thaliana**; "pheno
 
 ## environmental and env_explain
 The environmental parameters we are using come from a previous study [ClimTools]. The authors selected different source databases (e.g. https://neo.sci.gsfc.nasa.gov/, https://webmap.ornl.gov/, http://worldclim.org/version2,
-etc.), collected data from them, interpolated them to get information useful for our coordinates and to store those preprocessed data ending up with a collection of 196 environmental parameters.
+etc.), preprocessed the data in order to make them comparable with the ecotypes geographical coordinates and eventually definying a collection of 196 environmental parameters.
 
 Also in this case we needed to have an uniform format. Similarly to what we did for phenotypic data we are using two tables to describe the environmental dataset: ”environmental”, which collects the values of 196 environmental parameters for 1131 ecotypes; and ”env_explain” with the corresponding metadata. In this case we have an extensive description of the majority of ecotypes for each of the environmental parameters. 
 
@@ -198,6 +206,9 @@ If the ID is not yet present in the dataset an error is reported, so we should f
 
 infos(i.input = "CO_Spring")
 
+*parameters*
+- i.input. Trait of interest.
+- i.pw. Working directory path, (dafault home directory).
 
 ### set_backup
 This is an internal use function. It is called by *add_param* and *synchro* to check the status of the backup archive.
@@ -214,7 +225,9 @@ Then four tests are performed:
 
 set_backup(sb.dest = "/home/user")
 
+*parameter*
 
+- sb.dest. Working directory path, (dafault home directory).
 
 
 ### add_param
@@ -231,7 +244,12 @@ Finally the four backup files are written - two of them are tagged with the crea
 
 add_param(ap.newparam = "../inst/extdata/example_add_param.csv", ap.metadata = "../inst/extdata/example_add_param_meta.csv",ap.mode = T)
 
+*parameters*
 
+- ap.newparam. Path to the trait file to add.
+- ap.meta. Path to the corresponding metadata file. (The name of these two files should be the same, but the metadata file has an additional "_meta" before the file extension).
+- ap.mode. Boolean - T for environmental traits, F for phenotypical, (default F).
+- ap.bk. Working directory path, (dafault home directory).
 
 ### synchro
 *synchro* is the second step of the dataset updating procedure and coupled with *add_param* it provides a secure system to avoid loss of data and to handle human error.
@@ -244,15 +262,20 @@ Then sources and destination files are compared to assess whether the core datas
 
 Finally all the tables of the newly updated core dataset are saved in the RData file. 
 
-To sum up the data() provided with the package are the original version of the dataset and they could be restored if needed. While all the files in the "backups" folder - RData and .csv files - form a double check procedure to ensure the system is always updated.
-The choice to keep a backup archive was taken to have the possibility to synchronize the dataset to a previous version, in case a user notices some mistakes in a putative intermediate to last step.
+To sum up the data provided with the package should be considered a core collection of parameters, which can be ingregrated with new custom traits and that are always available to be restored if needed. 
+
+The RData and .csv files in the "backups" folder form a double check procedure to ensure the system is always up-to-date. The backup archive ensures possibility to synchronize the dataset to a previous version, in case of mistakes.
 
 *examples*
 
 - synchro()
 - synchro(s.mode = F)
 
+*parameters*
 
+- s.mode. Boolean - T for environmental, F for phenotypical, (default F).
+- s.bk. Working directory path, (dafault home directory).
+- s.version. Backup version to use, it can be "current" or backup date using the format "YYYY-MM-DD-hh-mm-ss", (default current).
 
 ## preprocessing
 The second section takes care of the actual GWAS analysis. It consists of two commands: one for the specific association study preprocessing (which produces input files for the gwas) and the analysis itself.
@@ -283,7 +306,13 @@ Once one of the five options is identified, the corresponding tables are selecte
 - preproc(pp.par = "100_4W", pp.option = "PxP", pp.geno ="inst/extdata/example_geno.RData", pp.cvt = "101_Li7")
 - preproc(pp.par = "100_4W", pp.option = "PxE", pp.geno ="inst/extdata/example_geno.RData", pp.cvt = "CO_Spring")
 
+*parameters*
 
+- pp.par. Name of the parameter to add. 
+- pp.option. One of the options of analysis. "E" or "P" for respectively univariate environmental and phenotypical; "ExE" or "PxP" for multivariate environmental and phenotypical; "PxE" for phenotypical with an environmental covariate.
+- pp.geno. Path to the genotype RData file
+- pp.cvt. Covariate trait name, to use for multivariate analysis, (default NULL).
+- pp.pw. Working directory path, (dafault home directory).
 
 ### Normal
 This is an internal function called in both univariate and multivariate data preprocessing functions in order to ensure the normality condition.
@@ -295,7 +324,7 @@ The test is performed for the data as they are, or iteratively in case the previ
 ### Univariate
 This is an internal function and it carries on the actual data preprocessing for an univariate analysis.
 
-First of all data corresponding to the selected phenotype are selected and missing values are removed. Than normality is checked.
+First of all, data corresponding to the selected phenotype are selected and missing values are removed. Than normality is checked.
 At last phenotype and genotype files are written subselecting the complete dataset.
 
 ### Multivariate
@@ -356,7 +385,18 @@ Plus some additional parameters are provided with a default value (that the user
 - gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 1, gw.annot = "inst/extdata/gemma_annot_example.csv",gw.cov = "ET")
 - gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 2, gw.annot = "inst/extdata/gemma_annot_example.csv",gw.cov = "all")
 
+*parameters*
 
+- gemma.name. Path to the gemma executable.
+- gw.input. Name of the parameter to analyze.
+- gw.cv. 0 for no covariates; 1 for one covariate, 2 for more covariates.
+- gw.cov. Covariate trait name for one-covariate analisys; "all" for n-covariate analysis.
+- gw.annot. SNP annotation file.
+- gw.loco. Activates leave one chromosome out approach, (default F).
+- gw.miss. Missingness threshold for gemma analysis (default 0.05).
+- gw.maf. Minor allele frequency threshold for gemma analysis (default 0.05).
+- gw.kinship. Path to kinship matrix if already precomputed. If not set, the matrix will be calculated by gemma.
+- gw.pw. Working directory path, (dafault home directory).
 
 ### kinship
 Kinship is a relatedness matrix, which measures the degree of similarity among the different ecotypes. This calculation is also taken care of by the GEMMA software.
@@ -388,6 +428,9 @@ In both adjusted P-value cases the thresholds represent the False Discovery Rate
 
 manhattan(mh.par = "CO_Spring")
 
+*parameters*
+mh.par. Name of the target trait.
+mh.pw. Working directory path, (dafault home directory).
 
 ### qq_plot
 A QQ plot represents the deviation of the observed P-values (in negative log scale) of a specific experiment from the expected ones which should follow an uniform distribution.
@@ -401,6 +444,10 @@ Also with this functions three plots are produced: one for the non-adjusted P va
 
 qq_plot(qq.par = "CO_Spring")
 
+*parameters*
+qq.par. Name of the target trait.
+qq.pw. Working directory path, (dafault home directory).
+
 
 ### pval_distribution
 The P-values distribution is simply a histogram representing the P-values of a specific experiment. The x-axis is binned in intervals of width 0.1. Also this plot helps to visualize the result of the experiment.
@@ -409,7 +456,9 @@ The P-values distribution is simply a histogram representing the P-values of a s
 
 pval_distribution(h.par = "CO_Spring")
 
-
+*parameters*
+h.par. Name of the target trait.
+h.pw. Working directory path, (dafault home directory).
 
 
 # Bibliography
