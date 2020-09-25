@@ -71,7 +71,7 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.loco = 
 
 
   #GWAS
-  gemma(input_name, gemman, gw.cv, gw.annot, gw.miss, gw.maf, gw.kinship, gw.pw)
+  gemma(input_name, gemman, gw.cv, gw.annot, gw.miss, gw.maf, gw.kinship, gw.loco, gw.pw)
 
 #  if (gw.cv > 0) {
 #    system(paste0(gemma, " -g ", gw.pw, "/geno_", input_name,

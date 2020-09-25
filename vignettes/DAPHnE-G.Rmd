@@ -1,7 +1,6 @@
 ---
 title: "DAPHnE-G"
 author: "Francesco Pezzini"
-date: "15 ottobre 2019"
 #csl: frontiers-in-microbiology.csl
 output: 
   bookdown::pdf_document2:
@@ -33,11 +32,11 @@ library(daphneg2)
 
 
 # Introduction
-DAPHnE-G or Deep *Arabidopsis* PHenotypical and Environmental GWAS, is an R pipeline for GWAS analysis in *A.thaliana*. It handles a data repository with different phenotypic and environmental parameters and it takes care of the association study from the first data preprocessing to the downstream analysis of results. 
+DAPHnE-G or Deep *Arabidopsis* PHenotypical and Environmental GWAS, is an R pipeline for GWAS analysis in *Arabidopsis thaliana*. It handles a data repository with different phenotypic and environmental parameters and it takes care of the association study from the first data preprocessing to the downstream analysis of results. 
 
-The tool is quite modular and flexible and it will suite plant biologists who work with *Arabidopsis*, as DAPHnE-G is taylored specifically for this organism. On the other hand the modularity of the structure could allow the implementation of other data repositories for different organisms.
+The tool is quite modular and flexible and it will suite plant biologists who work with *A.thaliana*, as DAPHnE-G is taylored specifically for this organism. On the other hand the modularity of the structure could allow the implementation of other data repositories for different organisms.
 
-The pipeline has been developed in order to collect and automatize part of the analysis used in the *SNPstar* webserver ADD REFENRENCE?. This is a database/data repository that aims to characterize the mutations of different ecotypes of *Arabidopsis*. A part of this characterization involves association studies.
+The pipeline has been developed in order to collect and automatize part of the analysis used in the *SNPstar* webserver. This is a database/data repository that aims to characterize the mutations of different ecotypes of *A.thaliana*. A part of this characterization involves association studies.
 
 
 # Requirements
@@ -67,23 +66,23 @@ To install DAPHnE-G it's enough to install the devtools package on your R and su
 
 
 # Data
-DAPHnE-G data repository consists of 8 tables (5 included in the package plus 3 external): a description of the ecotypes; a collection of environmental parameters and corresponding metedata; the phenotypic traits also with metadata, the genotypic information (SNP occurrence matrix), the linkage disequilibrium SNP blocks and an additional summary of SNP positions. The latter three tables cancan be downloaded from the address: http://141.48.9.71/ (TO SUBSTITUTE WITH AN URL?)
+DAPHnE-G data repository consists of 8 tables (5 included in the package plus 3 external): a description of the ecotypes; a collection of environmental parameters and corresponding metadata; the phenotypic traits also with metadata, the genotypic information (SNP occurrence matrix), the linkage disequilibrium SNP blocks and an additional summary of SNP positions. The latter three tables can be downloaded from the address: http://141.48.9.71/ 
 
 ## Ecotypes
 This table defines and gives information about the ecotypes that are supported.
-The collection comeS from the 1001genomes project [@1001genom], hosted by the corresponding repository. 
+The collection comes from the 1001genomes project, hosted by the corresponding repository. 
 
 The main feature of this collection is that the data provided for those ecotypes has been deeply genotyped. Therefore for each of them we have an extensive collection of SNPs, which is more precise and complete than the usual 250k array, that in turn needs a SNP imputation step to reach the same precision of our data technique.
 
-The most important fields are *ecotypeID* and *name* because they univoquely identify our ecotypes and are used also by several functions to filter data.
+The most important fields are *ecotypeID* and *name* because they univocally identify our ecotypes and are used also by several functions to filter data.
 
 ```{r}
 head(ecotypes)
 ```
 
 ## phenotypical and phn_explain
-In the frame of the 1001genomes project, the Arapheno database is one of the implemented databases, which collects 461 phenotypes from already published studies. 
-We collected all the available phenotypes, kept the values related to our 1131 ecotypes and in this way we established a phenotype collection. 
+In the frame of the 1001genomes project, the AraPheno database is one of the implemented databases, which collects 461 phenotypes from already published studies. 
+We collected all the available phenotypes, kept the values related to 1131 ecotypes and in this way we established a phenotype collection. 
 The phenotyic parameters are arranged according to ecotypes (accession id and accession name). Unfortunately the overlap with the ecotype collection is sometimes modest, leading to data sparsity problem.
 
 ```{r}
@@ -97,25 +96,25 @@ Assuming that new data will/may be integrated in the pipeline data collection an
 phenotypical[1:5,148:153]
 ```
 
-Usually the labels of our phenotypes are quite cryptic (the same holds also for environmental parameters). In fact the phenotype IDs are concise and it is not obvious for the user to understand what those IDs stand for and to which experiment they belong. 
+Usually the labels of the phenotypes are quite cryptic (the same holds also for environmental parameters). In fact the phenotype IDs are concise and it is not obvious for the user to understand what those IDs stand for and to which experiment they belong. 
 
 For this reason together with the ”phenotypical” table comes a second more descriptive one: ”phn_explain”, which collects metadata.
-The "explain" tables are supposed to describe which kind of data corresponds to which paramentes and to provide the user with additional information on the experiment which originally generated the data.
+The "explain" tables are supposed to describe which kind of data corresponds to which parameters and to provide the user with additional information on the experiment which originally generated the data.
 
 ```{r}
 colnames(phn_explain)
 ```
 
-The field "species" should always correspond to **Arabidopsis thaliana**; "phenotype_number" and "ID" univoquely identify the phenotypic parameter, although sometimes they are not really self explanatory.
-"doi" and "study" provide references to the arapheno link and pubblications the phenotypes belong to. "description" is a more extensive explanation of the type of data and measurement in comparison to "id". "integration_date" and "number_of_replicates" don't need further explanations and the last fields report several ontology nomenclatures terms: "to" stands for trait ontology, "eo" environment ontology, finally "unit" is the used measure unit.
+The field "species" should always correspond to **Arabidopsis thaliana**; "phenotype_number" and "ID" univocally identify the phenotypic parameter, although sometimes they are not really self explanatory.
+"doi" and "study" provide references to the AraPheno link and publications the phenotypes belong to. "description" is a more extensive explanation of the type of data and measurement in comparison to "id". "integration_date" and "number_of_replicates" don't need further explanations and the last fields report several ontology nomenclatures terms: "to" stands for trait ontology, "eo" environment ontology, finally "unit" is the used measure unit.
 
 ## environmental and env_explain
 The environmental parameters we are using come from a previous study [ClimTools]. The authors selected different source databases (e.g. https://neo.sci.gsfc.nasa.gov/, https://webmap.ornl.gov/, http://worldclim.org/version2,
 etc.), collected data from them, interpolated them to get information useful for our coordinates and to store those preprocessed data ending up with a collection of 196 environmental parameters.
 
-Also in this case we needed to have an uniform format. Similarly to what we did for phenotypic data we are using two tables to describe the environmental dataset: ”environmental”, which collects the values of 196 environmental parameters for 1131 ecotypes; and ”env explain” with the corresponding metadata. In this case we have an extensive description of the majority of ecotypes for each of the environmental parameters. 
+Also in this case we needed to have an uniform format. Similarly to what we did for phenotypic data we are using two tables to describe the environmental dataset: ”environmental”, which collects the values of 196 environmental parameters for 1131 ecotypes; and ”env_explain” with the corresponding metadata. In this case we have an extensive description of the majority of ecotypes for each of the environmental parameters. 
 
-Also these two datasets are suitable for the integration of new data, with the same requirements as the previous case - the new parameter data should be stored in a .csv file, named after the parameter id. Inside the file the program expects three fields: ”accession id”, ”accession name” and ”phenotype value”. Only the field requirements for the metadata file are different and less in number.
+Also these two datasets are suitable for the integration of new data, with the same requirements as the previous case - the new parameter data should be stored in a .csv file, named after the parameter id. Inside the file the program expects three fields: ”accession_id”, ”accession_name” and ”phenotype_value”. Only the field requirements for the metadata file are different and less in number.
 
 It follows an example of a subset of environmental parameters table, where we see ecotypes on the rows and climatic factors in the columns.
 
@@ -129,12 +128,12 @@ We also provide an example of corresponding metadata.
 colnames(env_explain)
 ```
 
-"Source" reports the source database, "ID" is the identification name, which could be not very self explanatory, "Description" is a more detailed explaination of the parameters, "Units" and "Analyzed.timeframe" fields don't need further explainations and "Link" reports the database link to the source data.
+"Source" reports the source database, "ID" is the identification name, which could be not very self explanatory, "Description" is a more detailed explanation of the parameters, "Units" and "Analyzed.timeframe" fields don't need further explanation and "Link" reports the database link to the source data.
 
 ## Genotype
-From the same repository (1001genomes) it comes the genotypic information and it can be retrieved at the web address ”https://1001genomes.org/data/GMI-MPI/releases/v3.1/”.
+The genotypic information was also derived from the 1001genomes repository(https://1001genomes.org/data/GMI-MPI/releases/v3.1/).
 We extrapolated a concise SNP occurrence table from VCF files describing the set of mutations for each ecotype. 
-The genotypes table in *DAPHnE-G* is the collection of bi-allelic point mutations, whose Minor Allele Frenquency (MAF) is greater than 5% and we end up with a very big table with 200000 SNPs and 1131 ecotypes (In the format accepted by GEMMA the number of columns is 1134 because we need to add the snpID, reference and alternative allele).
+The genotypes table in *DAPHnE-G* is the collection of bi-allelic point mutations, whose Minor Allele Frenquency (MAF) is greater than 5% and the result is a very big table with 200000 SNPs and 1131 ecotypes (In the format accepted by GEMMA the number of columns is 1134 because we need to add the snpID, reference and alternative allele).
 
 
 11000000 SNPs ~ 1%
@@ -147,14 +146,6 @@ The genotypes table in *DAPHnE-G* is the collection of bi-allelic point mutation
 head(geno_example)
 ```
 
-## Tags
-With so many SNPs it might occur problems. For instance when many SNPs are inherited together (are in the same linkage equilibrium with each other) and they contribute to an even stronger multiple testing burdain, without contributing with additional sensible information. 
-
-To face with problem a strategy is to "prune" the list of SNPs to feed the sotfware that calculates associations. 
-The pruning is performed calculating LD scores (linkage disequilibirum) and identifying subsets of SNPs with a high probability of being inherited together.
-
-We took care of this step beforehand, using the software plink (version 1.9) [@renteria_using_2013]. First we recoded the genotype information using .ped/.map format, then we pruned the SNPs according to their linkage disequilibrium, keeping only SNPs whose probability to be inherited together is very low and finally we tagged the variants in the same LD units with those that were kept after the pruning.
-
 
 ## GEMMA and gemma_annotation
 GEMMA is a software used to calculate associations for genomewide association studies. It implements linear mixed models, which help in the identification of data hierarchies and structures. 
@@ -166,8 +157,6 @@ head(gemma_annot_example)
 ```
 
 ## External files and programs
-- geno_005_ld02.RData
-- tags
 - gemma (from https://github.com/genetics-statistics/GEMMA)
 - gemma_annot.csv
 
@@ -181,25 +170,19 @@ The pipeline is divided into six parts:
 - Gwas analysis
 - Quality checking
 - Downstream report
-- Command line wrapper
 
 Each of them consists of several functions that are going to be explained in detail in the following sections.
 
-PROBABLY TO COMMENT Moreover the function *DAPHnE-G.R* acts as a wrapper and provides a command line version of the tool.
-
 
 # Usage
-DAPHnE-G has two modes of use, the first is the standard R package loading and function calling; the second is through the assstuffa.R function, which acts as a wrapper of all the other and is suited to work from command line.
-
 In the next sections all the functionalities are described, starting with the dataset handling, then the association study, the quality checking and the a posteriori report. Eventually the command line options are listed.
 
 ## Repository handling
-This section describes how to work with the core dataset, how to set up an .RData file contaning all the previously described tables, supposed to be constantly updated to the most recent version and an archive of backups which keep track of all the changes. I will also show how those two systems mutually interact in order t oavoid loss of information.
+This section describes how to work with the core dataset, how to set up an .RData file contaning all the previously described tables, supposed to be constantly updated to the most recent version and an archive of backups which keep track of all the changes. I will also show how those two systems mutually interact in order to avoid loss of information.
 
-METTI SCHEMA BELLO
 
 ### infos
-The phenotypical/environmental tables, containing the collection of values for the parameters, are identified through very concise names. This turns up sometimes in hard times for the user to properly understand what the chosen parameter is measuring. To this scope the tables *env_explain* and *phn_explain* are built - they contain a more detailed description of the parameters; what they measure, which study/publication they come from and possibly a more detailed description of the experimental setting. The function *infos* allows the user to print all these pieces of information for a selected parameter.
+The phenotypical/environmental tables, containing the collection of values for the parameters, are identified through very concise names. This can complicate the proper understanding of the chosen parameter. To this scope the tables *env_explain* and *phn_explain* are built - they contain a more detailed description of the parameters; what they measure, which study/publication they come from and possibly a more detailed description of the experimental setting. The function *infos* allows the user to print all these pieces of information for a selected parameter.
 
 Let's suppose for example that we are interested in the environmental parameter **CO_Spring**, we would call the function with:
 
@@ -236,7 +219,7 @@ set_backup(sb.dest = "/home/user")
 
 ### add_param
 *Add_param* is the first of the two steps needed for adding a new parameter to the parameter list tables.
-The input files are the new parameter data file, the new parameter metadata file (both *.csv* format. see the **Data** section), an environmental-mode flag: False (default) stands for phenotypic analysis and True enables environmental analysis and the backup folder path.
+The input files are the new parameter data file, the new parameter metadata file (both *.csv* format, see the **Data** section), an environmental-mode flag: False (default) stands for phenotypic analysis and True enables environmental analysis and the backup folder path.
 
 The first operation is to set the correct tables according to the mode.
 
@@ -262,7 +245,7 @@ Then sources and destination files are compared to assess whether the core datas
 Finally all the tables of the newly updated core dataset are saved in the RData file. 
 
 To sum up the data() provided with the package are the original version of the dataset and they could be restored if needed. While all the files in the "backups" folder - RData and .csv files - form a double check procedure to ensure the system is always updated.
-The choiche to keep a backup archive was taken to have the possibility to synchronize the dataset to a previous version, in case a user notices some mistakes in a putative intermediate to last step.
+The choice to keep a backup archive was taken to have the possibility to synchronize the dataset to a previous version, in case a user notices some mistakes in a putative intermediate to last step.
 
 *examples*
 
@@ -274,10 +257,9 @@ The choiche to keep a backup archive was taken to have the possibility to synchr
 ## preprocessing
 The second section takes care of the actual GWAS analysis. It consists of two commands: one for the specific association study preprocessing (which produces input files for the gwas) and the analysis itself.
 
-METTI SCHEMA BELLO 
 
 ### preproc
-The preprocessing functionalt, in the function *preproc*, discriminates among several possibilities for the analysis and the final task is to write the files that will be fed to GEMMA for the GWAS analysis - in particular phenotype, genotype files and, if needed, covariate and model files.
+The preprocessing functionaly, in the function *preproc*, discriminates among several possibilities for the analysis. The final task is to write the files that will be fed to GEMMA for the GWAS analysis - in particular phenotype, genotype files and, if needed, covariate and model files.
 
 The analysis can be univariate, to look for associations between mutations and only one parameter (phenotype); or multivariate if it considers also covariates.
 
@@ -291,7 +273,7 @@ We have in total five options:
 
 Moreover, in case of multivariate analysis, the user can choose to specify one covariate of interest (*oneCov* case, it has to be present in the core dataset), or ask the system to evaluate the best subset of covariates among the whole collection, *nCov* case. 
 
-Once one of the five options is identified, the corresponding tables are selected and the process for *univariate* or *multivariate* is initiated through teh corresponding function.
+Once one of the five options is identified, the corresponding tables are selected and the process for *univariate* or *multivariate* is initiated through the corresponding function.
 
 *examples* 
 
@@ -306,7 +288,7 @@ Once one of the five options is identified, the corresponding tables are selecte
 ### Normal
 This is an internal function called in both univariate and multivariate data preprocessing functions in order to ensure the normality condition.
 
-It uses kolmogorov-smirnoff test to compare the submitted data vector with another distribution, in our case a normal distribution with same mean and variance as the input sample.
+It uses the kolmogorov-smirnoff test to compare the submitted data vector with another distribution, in our case a normal distribution with same mean and variance as the input sample.
 
 The test is performed for the data as they are, or iteratively in case the previous test fails, with log, logit, sqrt and inverse transformations.
 
@@ -320,13 +302,13 @@ At last phenotype and genotype files are written subselecting the complete datas
 This internal function starts the data preprocessing for a multivariate analysis.
 In principle it works as in the univariate case. It starts retrieving phenotype values and removing missing values.
 
-But the it needs to set up an additional covariate table, which will be the same as the main phenotypic table in case of PxP or ExE analysis (removing the column of the phenptype of interest), or different for PxE mode.
+But it needs to set up an additional covariate table, which will be the same as the main phenotypic table in case of PxP or ExE analysis (removing the column of the phenptype of interest), or different for PxE mode.
 
-The last step consists of identifying how many covariates we are considering. In case of one covariate, it has to be one of the phenotypes of environmental factors already present in our list. On the contrary if the user wants to consider the best combination among all the possible covariates should set it to "all".
+The last step consists of identifying how many covariates we are considering. In case of one covariate, it has to be one of the phenotypes of environmental factors already present in our list. If the user wants to consider the best combination among all the possible covariates should set it to "all".
 
 
 ### oneCov
-This internal function finally writes the preprocessed phenotype, genotype and covariate files in case of a one covariate analysis.
+This internal function finally writes the preprocessed phenotype, genotype and covariate files in case of a one-covariate analysis.
 It should be used if the user would like to identify the associations between two variables present in the dataset, where the first will be the target and the second the covariate.
 
 As first step the function retrieves the covariate data values from the dataset, removes NAs and subselects the ecotypes in order to keep only the ones with definite values for both phenotype and covariate.
@@ -336,7 +318,7 @@ Subsequently it assess normality for both phenotype and covariate (using *normal
 The last step is to write the tables.
 
 ### nCov
-This internal function finally writes the preprocessed phenotype, genotype, covariate and model files in case of a n covariates analysis.
+This internal function finally writes the preprocessed phenotype, genotype, covariate and model files in case of a n-covariates analysis.
 It should be used if the user would like to identify the associations between a target variable and the best subset of covariates among those in the dataset.
 
 The datasets count 461 phenotypical traits and 196 environmental factors and it would be impossible to include all of them in one analysis and get a meaningful result from the mathematical/statistical prespective.
@@ -352,19 +334,18 @@ The only differences are that a *model* file is created, to keep track of which 
 ## GWAS analysis
 The GWAS mode performs the actual association analysis (through the software GEMMA) and returns a table with all associations and corresponding P-value.
 
-METTI SCHEMA BELLO
 
 ### gwas
 
 The script first has to set some parameters. 
-It checks the number of covariates (0,1 or 2 = as more than 1) and sets a suffix to the file name that is going to be used. (e.g. "CO_spring"" (with no suffix) for 0 covariates, "CO_Spring_ET" for 1 covariate (ET is the name of teh covariate) or "CO_Spring_all" for 2 covariates).
+It checks the number of covariates (0,1 or 2 = as more than 1) and sets a suffix to the file name that is going to be used (e.g. "CO_spring"" (with no suffix) for 0 covariates, "CO_Spring_ET" for 1 covariate (ET is the name of tHE covariate) or "CO_Spring_all" for 2 covariates).
 
-Then it retrieves the path of GEMMA on user's computer (user has to provide the file's name, for example "gemma-0.98.1-linux-static").
+Then it retrieves the path of GEMMA on the user's computer (user has to provide the file's name, for example "gemma-0.98.1-linux-static").
 
 The next steps are kinship matrix and association table calculation, which are both performed by GEMMA. (see below). The resulting P-values are then adjusted providing False Discovery Rates (FDRs) with function and finally the information about pruned SNPs is reintegrated.
 
 The user is asked to provide genotype, phenotype, kinship and in case covariate files, which are supposed to be produced with the preprocessing command of DAPHnE-G.
-The program needs also an annotation file: which contains snpID, chromosome and position in base pairs; and a tags file where are saved all the lists of SNPs in the same LD unit.
+The program needs also an annotation file which provides all the SNP information, such as snpID, chromosome and position in base pairs.
 
 Plus some additional parameters are provided with a default value (that the user can change): missingness and minor allele frequency.
 
@@ -378,7 +359,7 @@ Plus some additional parameters are provided with a default value (that the user
 
 
 ### kinship
-Kinship is a relatedness matrix, which measures the degree of similarity among the different ecotypes. This calculation is also taken care of with the GEMMA software.
+Kinship is a relatedness matrix, which measures the degree of similarity among the different ecotypes. This calculation is also taken care of by the GEMMA software.
 
 ### gemma
 It calculates the associations table using the software GEMMA, which exploits linear mixed models. 
@@ -386,27 +367,21 @@ The script needs a phenotype and a genotype and in case of multivariate analysis
 
 ### adjust
 This internal function provides an adjustment of GWAS result p-values.
-It simply loads the result file, calculate che adjustments with "benjamini-hochberg" and "benjamini-yekutieli" methods and save the file again.
+It simply loads the result file, calculate che adjustments with "benjamini-hochberg" and "benjamini-yekutieli" methods and saves the file again.
 
-### tagged_snps TO REMOVE
-It's an internal function and it adds to the result table more entries, one for each of the previously pruned SNPs that are inherited together with one of the SNPs in the original result file.
-
-First the tags file is loaded, then for each of the snps with a P-value less than 10e-5 it retrieves from the tags table the SNPs in the same LD unit and creates an entry in the extended result file with the tagged SNPs as id and the same P-value as the original tag SNP.
-Finally the extaned result table is saved, not updating the previous table but rather in a new file.
 
 
 
 ## Quality checking
 This section functionality is to assess the quality of the study. This is achieved through GWAS graphical methods: manhattan plots, qq-plots and p-value histogram distribution.
 
-SCHEMA BELLO
 
 ### manhattan
 A manhattan plot depicts the -log(P-values) of all analyzed SNPs sorting them according to chromosome and genomic position. It's very useful to visually identify quantity and coordinates of the strongest associations, which result in the highest peaks.
 
-For a target parameter are produced three Manhattan plots: one with non-adjusted P-values and two with adjusted ones. For these latter are used Benjamini-Hochberg (BH) and Benjamini-Yekutieli (BY) adjustments.
+Three Manhattan plots are generated per target parameter, displaying non-adjusted P-values, Benjamini-Hochberg (BH) or Benjamini-Yekutieli (BY) P-value adjustments.
 
-For each of the plots three significance thresholds are highlighted: 1e-5, 1e-6 and 1e-7 for the non-adjusted P-values; 0.2, 0.1 and 0.05 for BH case and 0.1, 0.05, 0.01 for BY case.
+For each of the plots three significance thresholds are highlighted: 1e-5, 1e-6 and 1e-7 for the non-adjusted P-values; 0.2, 0.1 and 0.05 for BH and 0.1, 0.05, 0.01 for BY adjustments.
 In both adjusted P-value cases the thresholds represent the False Discovery Rate (FDR), e.g. threshold of 0.05 equals an FDR of 5%.
 
 *examples*
@@ -415,8 +390,8 @@ manhattan(mh.par = "CO_Spring")
 
 
 ### qq_plot
-A QQ plot represents the deviation of the observed P-values (in negavite log scale) of a specific experiment from the expected ones which should follow an uniform distribution.
-Given that for a successful GWAS experiment we expect just an minority of the SNPs to show the association, this little set should be vizualized as a small divergind tail on the right part of the plot.
+A QQ plot represents the deviation of the observed P-values (in negative log scale) of a specific experiment from the expected ones which should follow an uniform distribution.
+Given that for a successful GWAS experiment we expect just a minority of the SNPs to show the association, this little set should be visualized as a small diverging tail on the right part of the plot.
 
 The expected values are simulated dividing the interval [0,1] into n qeually spaced bins, where n is the number of SNPs analyzed and transforming those values in negative logs; the observed values are the negative logs of the sorted list of P values.
 
@@ -428,14 +403,13 @@ qq_plot(qq.par = "CO_Spring")
 
 
 ### pval_distribution
-The P-values distribution is simply an histogram representing the P-values of a specific experiment. The x-axis is binned in intervals of width 0.1. Also this plot helps to visualize the result of the experiment.
+The P-values distribution is simply a histogram representing the P-values of a specific experiment. The x-axis is binned in intervals of width 0.1. Also this plot helps to visualize the result of the experiment.
 
 *examples*
 
 pval_distribution(h.par = "CO_Spring")
 
 
-## Summary report
 
 
 # Bibliography
