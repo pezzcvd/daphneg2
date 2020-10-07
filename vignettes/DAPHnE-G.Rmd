@@ -26,6 +26,9 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+
+
 ```{r setup}
 library(daphneg2)
 ```
@@ -64,17 +67,22 @@ To install DAPHnE-G it's enough to install the devtools package on your R and su
 - install_github("pezzcvd/daphneg2")
 - library(daphneg2)
 
-# List of tables
+
+# Data
+DAPHnE-G data repository consists of 8 tables (5 included in the package plus 2 external): a description of the ecotypes; a collection of environmental parameters and corresponding metadata; the phenotypic traits also with metadata. 
 
 - Ecotypes
 - Environmental parameters
 - Environmental metadata
 - Phenotypic traits
 - Phenotypic metadata
-- Genotypic information (SNP occurrence matrix)
 
-# Data
-DAPHnE-G data repository consists of 8 tables (5 included in the package plus 3 external): a description of the ecotypes; a collection of environmental parameters and corresponding metadata; the phenotypic traits also with metadata, the genotypic information (SNP occurrence matrix), the linkage disequilibrium SNP blocks and an additional summary of SNP positions. The latter three tables can be downloaded from the address: http://141.48.9.71/ 
+The external ones: genotypic information (SNP occurrence matrix) and an additional summary of SNP positions. 
+
+- Genotypic information (SNP occurrence matrix)
+- Gemma annotation (SNP chromosome and position)
+
+The latter tables can be downloaded from the address: http://141.48.9.71/ 
 
 ## Ecotypes
 This table defines and gives information about the ecotypes that are supported.
@@ -113,7 +121,7 @@ The "explain" tables are supposed to describe which kind of data corresponds to 
 colnames(phn_explain)
 ```
 
-The field "species" should always correspond to **Arabidopsis thaliana**; "phenotype_number" and "ID" univocally identify the phenotypic parameter, although sometimes they are not really self explanatory.
+The field "species" should always correspond to *Arabidopsis thaliana*; "phenotype_number" and "ID" univocally identify the phenotypic parameter, although sometimes they are not really self explanatory.
 "doi" and "study" provide references to the AraPheno link and publications the phenotypes belong to. "description" is a more extensive explanation of the type of data and measurement in comparison to "id". "integration_date" and "number_of_replicates" don't need further explanations and the last fields report several ontology nomenclatures terms: "to" stands for trait ontology, "eo" environment ontology, finally "unit" is the used measure unit.
 
 ## environmental and env_explain
@@ -141,14 +149,8 @@ colnames(env_explain)
 ## Genotype
 The genotypic information was also derived from the 1001genomes repository(https://1001genomes.org/data/GMI-MPI/releases/v3.1/).
 We extrapolated a concise SNP occurrence table from VCF files describing the set of mutations for each ecotype. 
-The genotypes table in *DAPHnE-G* is the collection of bi-allelic point mutations, whose Minor Allele Frenquency (MAF) is greater than 5% and the result is a very big table with 200000 SNPs and 1131 ecotypes (In the format accepted by GEMMA the number of columns is 1134 because we need to add the snpID, reference and alternative allele).
+The genotypes table in *DAPHnE-G* is the collection of bi-allelic point mutations, whose Minor Allele Frenquency (MAF) is greater than 5% and the result is a very big table with almost 2 milion SNPs and 1131 ecotypes (In the format accepted by GEMMA the number of columns is 1134 because we need to add the snpID, reference and alternative allele).
 
-
-11000000 SNPs ~ 1%
-
-1700000 SNPs  ~ 5%
-
-200000 SNPs   ~ 5% and pruned list
 
 ```{r}
 head(geno_example)
@@ -171,13 +173,12 @@ head(gemma_annot_example)
 
 
 # Structure
-The pipeline is divided into six parts:
+The pipeline is divided into four parts:
 
 - Repository handling
 - Preprocessing
 - Gwas analysis
 - Quality checking
-- Downstream report
 
 Each of them consists of several functions that are going to be explained in detail in the following sections.
 
@@ -277,7 +278,7 @@ The RData and .csv files in the "backups" folder form a double check procedure t
 - s.bk. Working directory path, (dafault home directory).
 - s.version. Backup version to use, it can be "current" or backup date using the format "YYYY-MM-DD-hh-mm-ss", (default current).
 
-## preprocessing
+## Preprocessing
 The second section takes care of the actual GWAS analysis. It consists of two commands: one for the specific association study preprocessing (which produces input files for the gwas) and the analysis itself.
 
 
@@ -297,6 +298,8 @@ We have in total five options:
 Moreover, in case of multivariate analysis, the user can choose to specify one covariate of interest (*oneCov* case, it has to be present in the core dataset), or ask the system to evaluate the best subset of covariates among the whole collection, *nCov* case. 
 
 Once one of the five options is identified, the corresponding tables are selected and the process for *univariate* or *multivariate* is initiated through the corresponding function.
+
+It is also possible to choose to use a leave-one-chromosome-out (loco) approach. In this case in the data preprocessing it will be created two genotype files for each chromosomes. Those files will contain the subsets of all SNPs belonging to one specific chromosome and its complementary (all SNPs that don't belong to one chromosome).
 
 *examples* 
 
@@ -375,6 +378,8 @@ The next steps are kinship matrix and association table calculation, which are b
 
 The user is asked to provide genotype, phenotype, kinship and in case covariate files, which are supposed to be produced with the preprocessing command of DAPHnE-G.
 The program needs also an annotation file which provides all the SNP information, such as snpID, chromosome and position in base pairs.
+
+In case of *loco* approach it will be performed one study for each chromosome, computing a kinship matrix from all the SNPs which don't belong to the trget chromosome.
 
 Plus some additional parameters are provided with a default value (that the user can change): missingness and minor allele frequency.
 

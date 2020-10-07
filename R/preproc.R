@@ -86,7 +86,7 @@ preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.loco = F, pp.pw
 
     # Call
     multivariate(mv.input = pp.par, mv.par = pp.cvt, mv.pheno = pp.pheno,
-                 mv.div = pxeFlag, mv.env_altern = pp.ctab, mv.pw = pp.pw)
+                 mv.div = pxeFlag, mv.env_altern = pp.ctab, mv.loco = pp.loco, mv.pw = pp.pw)
 
   }
 

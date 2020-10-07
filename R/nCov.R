@@ -12,6 +12,7 @@
 #' @param nc.table dataframe. Either phenotypical or environmental.
 #' @param xp numeric{1}- Phenotype values.
 #' @param xn numeric{1}. Phenotype non-null positions.
+#' @param nc.loco boolean. Leave one chromosome out approach. (default FALSE).
 #' @param nc.pw character{1}. Output path. (default home folder).
 #'
 #' @return
@@ -20,7 +21,7 @@
 #'
 #' @noRd
 #'
-nCov = function(nc.input, nc.table, xp, xn, nc.pw = normalizePath("~")) {
+nCov = function(nc.input, nc.table, xp, xn, nc.loco = F, nc.pw = normalizePath("~")) {
 
   # Input controls
   checkmate::assert_string(x = nc.input)
@@ -89,18 +90,37 @@ nCov = function(nc.input, nc.table, xp, xn, nc.pw = normalizePath("~")) {
   write.table(bestModel$model, paste0(nc.pw, "/model_", nc.input, "_all"), sep = "\t", quote = F)
   #debug_msg("Model file written \n")
 
+
+  #LOCO
+  if (nc.loco == T) {
+    for (c in 1:5) {
+      col1 <- append(c("snpID", "alt", "ref"), acces)
+      #g1 <- genotype[substr(genotype$snpID, 4, 4) == i, colnames(genotype) %in% col1]
+      #g2 <- genotype[substr(genotype$snpID, 4, 4) != i, colnames(genotype) %in% col1]
+      g1 <- genotype[substr(genotype$snpID, 4, 4) == c,colnames(genotype) %in% col1]
+      g2 <- genotype[substr(genotype$snpID, 4, 4) != c,colnames(genotype) %in% col1]
+
+      write.table(g1, paste(nc.pw,"/geno_chr", c, "_", nc.input, "_all", sep = ""), sep = ", ",
+                  row.names = F, col.names = F, quote = F)
+      write.table(g2, paste(nc.pw,"/geno_notchr", c, "_", nc.input, "_all", sep = ""), sep = ", ",
+                  row.names = F, col.names = F, quote = F)
+
+    }
+  } else {
+    acces = rownames(bestModel$model)
+    col1 <- append(c("snpID", "alt", "ref"), acces)
+    g1 <- genotype[,colnames(genotype) %in% col1]
+    #debug_msg(paste0("Genotype table dimensions after filtering.
+    #                ", nrow(g1), " X ", ncol(g1), " \n"))
+
+    # Writing genotype
+    write.table(g1, paste0(nc.pw,"/geno_", nc.input, "_all"), sep = ", ",
+                row.names = F, col.names = F, quote = F)
+  }
   # Genotype filtering
   #debug_msg(paste0("Genotype table dimensions before filtering.
   #               ", nrow(genotype), " X ", ncol(genotype), " \n"))
-  acces = rownames(bestModel$model)
-  col1 <- append(c("snpID", "alt", "ref"), acces)
-  g1 <- genotype[,colnames(genotype) %in% col1]
-  #debug_msg(paste0("Genotype table dimensions after filtering.
-  #                ", nrow(g1), " X ", ncol(g1), " \n"))
 
-  # Writing genotype
-  write.table(g1, paste0(nc.pw,"/geno_", nc.input, "_all"), sep = ", ",
-              row.names = F, col.names = F, quote = F)
   #debug_msg("Genotype file written \n")
 
   #debug_msg("nCov function completed successfully \n")

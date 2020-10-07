@@ -15,6 +15,7 @@
 #' @param mv.div FLag. If TRUE indicates the need of having both phenotypical and
 #' environmental datasets (PxE analysis). (default F)
 #' @param mv.env_altern data.frame. Environmental, loaded in case of PxE analysis.
+#' @param mv.loco boolean. Leave one chromosome out approach. (default FALSE).
 #' @param mv.pw character{1}. Output path. (default home folder).
 #'
 #' @return NULL. It's called by the preprocessing prodedure and it calls either "oneCov" or "nCov"
@@ -22,7 +23,7 @@
 #' @noRd
 #'
 #'
-multivariate = function(mv.input, mv.par, mv.pheno, mv.div = F, mv.env_altern = NULL, mv.pw = normalizePath("~")) {
+multivariate = function(mv.input, mv.par, mv.pheno, mv.div = F, mv.env_altern = NULL, mv.loco = F, mv.pw = normalizePath("~")) {
   # Input controls
   checkmate::assert_character(x = mv.input, any.missing = F, len = 1)
   checkmate::assert_character(x = mv.par, any.missing = F, len = 1)
@@ -62,12 +63,12 @@ multivariate = function(mv.input, mv.par, mv.pheno, mv.div = F, mv.env_altern = 
   # check case one covariate
   if (mv.par != "all") {
     #debug_msg(paste0("One covariate: ", mv.par, " \n"))
-    oneCov(mv.input, mv.par, mv.table, mv.x, mv.xn, mv.pw)
+    oneCov(mv.input, mv.par, mv.table, mv.x, mv.xn, mv.loco, mv.pw)
 
     #check case more covariates --> linear model
   } else {
     #debug_msg("More covariates \n")
-    nCov(mv.input, mv.table, mv.x, mv.xn, mv.pw)
+    nCov(mv.input, mv.table, mv.x, mv.xn, mv.loco, mv.pw)
   }
 
   #debug_msg("Multivariate function completed successfully \n")
