@@ -16,7 +16,7 @@ vignette: >
   %\VignetteIndexEntry{DAPHnE-G}
   %\VignetteEncoding{UTF-8}
   
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
 ---
 
 ```{r, include = FALSE}
