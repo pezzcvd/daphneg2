@@ -16,7 +16,6 @@ Imports:
     MASS,
     filesstrings,
     dplyr,
-    rmarkdown,
     ggplot2
 Suggests: 
     testthat (>= 2.1.0),
