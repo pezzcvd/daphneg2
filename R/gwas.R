@@ -110,31 +110,44 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.loco = 
   res_dir = paste0(gw.pw, "/daphneg_results")
   print(res_dir)
 
-  dir.create(paste0(res_dir, "/", input_name,"_dir"))
+  if (gw.loco == T) {
+    dir.create(paste0(res_dir, "/", input_name,"_loco_dir"))
+    res_folder = paste0(res_dir, "/", input_name,"_loco_dir")
+  } else {
+    dir.create(paste0(res_dir, "/", input_name,"_dir"))
+    res_folder = paste0(res_dir, "/", input_name,"_dir")
+  }
+
   #debug_msg("Results folder created \n")
 
   print("moving files")
   outfiles = list.files(path = paste0(gw.pw, "/output"), pattern = paste0(input_name), full.names = T)
   filesstrings::file.move(files = outfiles,
-                          destinations = paste0(res_dir, "/", input_name, "_dir"))
+                          destinations = res_folder)
   filesstrings::dir.remove(paste0(gw.pw, "/output"))
-  filesstrings::file.move(files = paste0(gw.pw, "/pheno_", input_name),
-                          destinations = paste0(res_dir, "/", input_name, "_dir"))
-  filesstrings::file.move(files = paste0(gw.pw, "/geno_", input_name),
-                          destinations = paste0(res_dir, "/", input_name, "_dir"))
+
+  outfiles = list.files(path = gw.pw, pattern = paste0(input_name), full.names = T)
+  filesstrings::file.move(files = outfiles,
+                          destinations = resfolder)
+  filesstrings::dir.remove(paste0(gw.pw, "/output"))
+
+  #filesstrings::file.move(files = paste0(gw.pw, "/pheno_", input_name),
+  #                        destinations = paste0(res_dir, "/", input_name, "_dir"))
+  #filesstrings::file.move(files = paste0(gw.pw, "/geno_", input_name),
+  #                        destinations = paste0(res_dir, "/", input_name, "_dir"))
 
   #system(paste0("mv pheno_", input_name, " results/gwas/", input_name,"_dir"))
   #system(paste0("mv geno_", input_name, " results/gwas/", input_name,"_dir"))
-  if (gw.cv > 1) {
-    filesstrings::file.move(files = paste0(gw.pw, "/model_", input_name),
-                            destinations = paste0(res_dir, "/", input_name, "_dir"))
+#  if (gw.cv > 1) {
+#    filesstrings::file.move(files = paste0(gw.pw, "/model_", input_name),
+#                            destinations = paste0(res_dir, "/", input_name, "_dir"))
     #system(paste0("mv model_", input_name, " results/gwas/", input_name,"_dir"))
-  }
-  if (gw.cv > 0) {
-    filesstrings::file.move(files = paste0(gw.pw, "/covar_", input_name),
-                            destinations = paste0(res_dir, "/", input_name, "_dir"))
+#  }
+#  if (gw.cv > 0) {
+#    filesstrings::file.move(files = paste0(gw.pw, "/covar_", input_name),
+#                            destinations = paste0(res_dir, "/", input_name, "_dir"))
     #system(paste0("mv covar_", input_name, " results/gwas/", input_name,"_dir"))
-  }
+#  }
 
   #out_files = list.files(path = gw.pw, pattern = "output", all.files = T, full.names = T)
   #filesstrings::file.move(files = out_files,
