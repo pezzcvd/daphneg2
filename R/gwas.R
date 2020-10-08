@@ -123,13 +123,12 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.loco = 
   print("moving files")
   outfiles = list.files(path = paste0(gw.pw, "/output"), pattern = paste0(input_name), full.names = T)
   filesstrings::file.move(files = outfiles,
-                          destinations = res_folder)
+                          destinations = res_folder, overwrite = T)
   filesstrings::dir.remove(paste0(gw.pw, "/output"))
 
   outfiles = list.files(path = gw.pw, pattern = paste0(input_name), full.names = T)
   filesstrings::file.move(files = outfiles,
-                          destinations = resfolder)
-  filesstrings::dir.remove(paste0(gw.pw, "/output"))
+                          destinations = res_folder, overwrite = T)
 
   #filesstrings::file.move(files = paste0(gw.pw, "/pheno_", input_name),
   #                        destinations = paste0(res_dir, "/", input_name, "_dir"))
