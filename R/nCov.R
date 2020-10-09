@@ -95,6 +95,7 @@ nCov = function(nc.input, nc.table, xp, xn, genotype, nc.loco = F, nc.pw = norma
   #LOCO
   if (nc.loco == T) {
     for (c in 1:5) {
+      acces = rownames(bestModel$model)
       col1 <- append(c("snpID", "alt", "ref"), acces)
       #g1 <- genotype[substr(genotype$snpID, 4, 4) == i, colnames(genotype) %in% col1]
       #g2 <- genotype[substr(genotype$snpID, 4, 4) != i, colnames(genotype) %in% col1]
