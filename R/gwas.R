@@ -34,7 +34,7 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.loco = 
   checkmate::assert_string(x = gw.input)
   checkmate::assert_choice(gw.cv, choices = 0:2, null.ok = F)
   checkmate::assert_choice(x = gw.cov, null.ok = T,
-                           choices = c(colnames(environmental), colnames(phenotypical)))
+                           choices = c("all", colnames(environmental), colnames(phenotypical)))
   checkmate::assert_string(x = gemma.name)
   checkmate::assert_string(x = gw.pw)
 
