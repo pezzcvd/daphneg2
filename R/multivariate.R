@@ -12,6 +12,7 @@
 #' @param mv.input character{1}. Name of the parameter of interest.
 #' @param mv.par character{1}. Name of the covariate parameter.
 #' @param mv.pheno data.frame. Either phenotypical or environmental.
+#' @param genotype data.frame. Table with SNP occurrences among ecotypes.
 #' @param mv.div FLag. If TRUE indicates the need of having both phenotypical and
 #' environmental datasets (PxE analysis). (default F)
 #' @param mv.env_altern data.frame. Environmental, loaded in case of PxE analysis.
@@ -23,7 +24,7 @@
 #' @noRd
 #'
 #'
-multivariate = function(mv.input, mv.par, mv.pheno, mv.div = F, mv.env_altern = NULL, mv.loco = F, mv.pw = normalizePath("~")) {
+multivariate = function(mv.input, mv.par, mv.pheno, genotype,  mv.div = F, mv.env_altern = NULL, mv.loco = F, mv.pw = normalizePath("~")) {
   # Input controls
   checkmate::assert_character(x = mv.input, any.missing = F, len = 1)
   checkmate::assert_character(x = mv.par, any.missing = F, len = 1)
@@ -63,12 +64,12 @@ multivariate = function(mv.input, mv.par, mv.pheno, mv.div = F, mv.env_altern = 
   # check case one covariate
   if (mv.par != "all") {
     #debug_msg(paste0("One covariate: ", mv.par, " \n"))
-    oneCov(mv.input, mv.par, mv.table, mv.x, mv.xn, mv.loco, mv.pw)
+    oneCov(mv.input, mv.par, mv.table, mv.x, mv.xn, genotype, mv.loco, mv.pw)
 
     #check case more covariates --> linear model
   } else {
     #debug_msg("More covariates \n")
-    nCov(mv.input, mv.table, mv.x, mv.xn, mv.loco, mv.pw)
+    nCov(mv.input, mv.table, mv.x, mv.xn, genotype, mv.loco, mv.pw)
   }
 
   #debug_msg("Multivariate function completed successfully \n")

@@ -23,7 +23,7 @@
 #' preproc("CO_Spring", "E", gen)
 preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.loco = F, pp.pw = normalizePath("~")) {
   # Loading updated dataset
-  load(paste0(pp.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
+  #load(paste0(pp.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
   # Loading genotype information
   checkmate::assert_file(pp.geno)
   load(pp.geno)
@@ -85,7 +85,7 @@ preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.loco = F, pp.pw
     checkmate::assert_choice(x = pp.par, choices = colnames(pp.pheno))
 
     # Call
-    multivariate(mv.input = pp.par, mv.par = pp.cvt, mv.pheno = pp.pheno,
+    multivariate(mv.input = pp.par, mv.par = pp.cvt, mv.pheno = pp.pheno, genotype = genotype,
                  mv.div = pxeFlag, mv.env_altern = pp.ctab, mv.loco = pp.loco, mv.pw = pp.pw)
 
   }

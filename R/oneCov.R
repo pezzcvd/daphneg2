@@ -9,6 +9,7 @@
 #' @param oc.table dataframe. Either phenotypical or environmental.
 #' @param x numeric{1}- Phenotype values.
 #' @param xn numeric{1}. Phenotype non-null positions.
+#' @param genotype data.frame. Table with SNP occurrences among ecotypes.
 #' @param oc.loco boolean. Leave one chromosome out approach. (default FALSE).
 #' @param oc.pw character{1}. Output path. (default home folder).
 #'
@@ -18,7 +19,7 @@
 #' @noRd
 #'
 #'
-oneCov = function (oc.input, oc.par, oc.table, x, xn, oc.loco = F, oc.pw = normalizePath("~")) {
+oneCov = function (oc.input, oc.par, oc.table, x, xn, genotype, oc.loco = F, oc.pw = normalizePath("~")) {
   # Controls on input
   checkmate::assert_string(x = oc.input)
   checkmate::assert_string(x = oc.par)

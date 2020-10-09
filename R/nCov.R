@@ -12,6 +12,7 @@
 #' @param nc.table dataframe. Either phenotypical or environmental.
 #' @param xp numeric{1}- Phenotype values.
 #' @param xn numeric{1}. Phenotype non-null positions.
+#' @param genotype data.frame. Table with SNP occurrences among ecotypes.
 #' @param nc.loco boolean. Leave one chromosome out approach. (default FALSE).
 #' @param nc.pw character{1}. Output path. (default home folder).
 #'
@@ -21,7 +22,7 @@
 #'
 #' @noRd
 #'
-nCov = function(nc.input, nc.table, xp, xn, nc.loco = F, nc.pw = normalizePath("~")) {
+nCov = function(nc.input, nc.table, xp, xn, genotype, nc.loco = F, nc.pw = normalizePath("~")) {
 
   # Input controls
   checkmate::assert_string(x = nc.input)
@@ -52,7 +53,7 @@ nCov = function(nc.input, nc.table, xp, xn, nc.loco = F, nc.pw = normalizePath("
   # It is retained the best model out of 1000
   modelsSet = list()
   for (i in 1:1000) {
-    cofSub2 = cofCompl[,sample(1:ncol(cofCompl), 10)]
+    cofSub2 = cofCompl[,sample(2:ncol(cofCompl), 10)]
     print(sample(1:ncol(cofCompl), 10))
     newdf2 = as.data.frame(cbind("y" = x, cofSub2))
     newdf2 = newdf2[!is.na(rowMeans(newdf2)),]
