@@ -1,4 +1,4 @@
-phenotype_name,accession_id,accession_name,accession_cs_number,accession_longitude,accession_latitude,accession_country,phenotype_value,obs_unit_id
+phenotype_name,accession_id,accession_name,accession_cs_number,accession_longitude,accession_latitude,accession_country,value,obs_unit_id
 Ni60,8610,11ME1.32,,-86359,42093,US,7.293872558,11172
 Ni60,8610,11ME1.32,,-86359,42093,US,6.703028133,11173
 Ni60,8610,11ME1.32,,-86359,42093,US,6.183492517,11174

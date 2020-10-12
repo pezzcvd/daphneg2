@@ -73,8 +73,8 @@ add_param = function(ap.newparam,ap.metadata, ap.mode = F, ap.bk = normalizePath
   ap.newparam = utils::read.csv(ap.newparam, stringsAsFactors = F)
 
   # Controls on ap.newparam as a data.frame
-  # It has to contain at least three fields: accession_id, accession_name, phenotype_value
-  checkmate::assert_true(x = all(c("accession_id", "accession_name", "phenotype_value") %in%  colnames(ap.newparam)))
+  # It has to contain at least three fields: accession_id, accession_name, value
+  checkmate::assert_true(x = all(c("accession_id", "accession_name", "value") %in%  colnames(ap.newparam)))
 
   # Read metadata file. from now on is a vector
   ap.metadata = as.character(read.csv(ap.metadata, header = F)[,1])
