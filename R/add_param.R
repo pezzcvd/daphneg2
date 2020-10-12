@@ -2,7 +2,7 @@
 #'
 #' The function adds a new parameter to the dataset and performs a backup. It requires
 #' two files: the first containing the actual new parameter data. Inside the file three
-#' fields are mandatory: "accession_id", "accession_name", "phenotype_value". The second
+#' fields are mandatory: "accession_id", "accession_name", "value". The second
 #' file reports all the metadata information. (Note that environmental and phenotypical
 #' parameters have different sets of metadata. They need to be stored with the correct
 #' number of fields and in the correct order). Both the files are in .csv format.
@@ -16,7 +16,7 @@
 #' "current" for the actual use and reference.
 #'
 #' @param ap.newparam Character. Indicates the filename (csv) of the new parameter data.
-#' It has to contain at least three fields: accession_id, accession_name, phenotype_value
+#' It has to contain at least three fields: accession_id, accession_name, value
 #' @param ap.metadata Character. Indicates the metadata filename (csv).
 #' @param ap.mode Flag. F (default) for phenotypical parameter, T for environmental
 #' @param ap.bk Character. Path to the backup folder. (default home folder).
@@ -115,7 +115,7 @@ add_param = function(ap.newparam,ap.metadata, ap.mode = F, ap.bk = normalizePath
   # Setting up vector to add to the core dataset. The vector contains either the value corresponding to
   # the corresponding ecotype (present in the core dataset), or NA.
   res = ecotypes$ecotypeid %in% tmpv$accession_id
-  res[res == T] = tmpv$phenotype_value
+  res[res == T] = tmpv$value
   res[res == F] = NA
   #debug_msg(paste0("New parameter vector set up. Dimensions: ", length(res), " \n"))
   #debug_msg(paste0("Reference table dimensions: ", nrow(old_table), " x ", ncol(old_table), " \n"))
