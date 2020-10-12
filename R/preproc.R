@@ -23,7 +23,7 @@
 #' preproc("CO_Spring", "E", gen)
 preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.loco = F, pp.pw = normalizePath("~")) {
   # Loading updated dataset
-  #load(paste0(pp.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
+  load(paste0(pp.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
   # Loading genotype information
   checkmate::assert_file(pp.geno)
   load(pp.geno)

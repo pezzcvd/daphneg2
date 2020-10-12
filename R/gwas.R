@@ -28,7 +28,7 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.loco = 
                 gw.miss = 0.05, gw.maf = 0.05, gw.kinship = "", gw.pw = normalizePath("~")) {
   #debug_msg("Starting gwas function. \n")
   # Loading updated dataset
-  #load(paste0(gw.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
+  load(paste0(gw.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
 
   # Input controls
   checkmate::assert_string(x = gw.input)
