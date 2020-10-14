@@ -37,7 +37,7 @@ The GWAS analysis is carried out by the tool GEMMA (version 0.98.1).
 
 ![workflow](inst/extdata/overview_DAPHNEG_locoF.png)
 
-![workflow-loco](images/overview_DAPHNEG_locoF.png)
+![workflow-loco](images/overview_DAPHNEG_locoT.png)
 
 
 # Examples
