@@ -6,7 +6,7 @@ DAPHnE-G or Deep *Arabidopsis* PHenotypical and Environmental GWAS, is an R pipe
 
 The tool is quite modular and flexible and it will suite plant biologists who work with *A.thaliana*, as DAPHnE-G is taylored specifically for this organism. On the other hand the modularity of the structure could allow the implementation of other data repositories for different organisms.
 
-The pipeline has been developed in order to collect and automatize part of the analysis used in the *SNPstar* webserver. This is a comprehensive database/data repository that aims to characterize the ecotypes of *A.thaliana* as for mutations, associations and differences in sequences and strutures are concerned. Among the provided resouces it has been developed also a tool to calculate associations with phnotypical and environmental traits.
+The pipeline has been developed in order to collect and automatize part of the analysis used in the *SNPstar* webserver. This is a comprehensive database/data repository that aims to characterize the ecotypes of *A.thaliana* for mutations, associations and differences in sequences and structures are concerned. Among the provided resources it has been developed also a tool to calculate associations with phenotypical and environmental traits.
 
 
 
@@ -36,10 +36,10 @@ The GWAS analysis is carried out by the tool GEMMA (version 0.98.1).
 
 ## Program structure and workflow
 
-### Workflow without leave-one-chromosome-out option
+### Workflow including all chromosomes(loco=F)
 ![workflow](inst/extdata/overview_DAPHNEG_locoF.png)
 
-### Workflow with leave-one-chromosome-out option
+### Workflow including all chromosomes(loco=T)"
 ![workflow](inst/extdata/overview_DAPHNEG_locoT.png)
 
 
