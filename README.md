@@ -9,6 +9,7 @@ The tool is quite modular and flexible and it will suite plant biologists who wo
 The pipeline has been developed in order to collect and automatize part of the analysis used in the *SNPstar* webserver. This is a comprehensive database/data repository that aims to characterize the ecotypes of *A.thaliana* as for mutations, associations and differences in sequences and strutures are concerned. Among the provided resouces it has been developed also a tool to calculate associations with phnotypical and environmental traits.
 
 
+
 # Requirements
 The pipeline is implemented in R  (version 3.6.1). In particular the following packages are needed: filesstrings (version 3.1.5), dplyr (version 0.8.3), MASS (version 7.3-51.4), ggplot2 (version 3.2.1).
 
