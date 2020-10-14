@@ -1,4 +1,4 @@
-# daphneg
+# DAPHnE-G
 
 
 # Introduction
