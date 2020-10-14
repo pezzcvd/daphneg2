@@ -33,6 +33,13 @@ The GWAS analysis is carried out by the tool GEMMA (version 0.98.1).
 - library(devtools)
 - install_github("pezzcvd/daphneg2")
 
+## Program structure and workflow
+
+![workflow](inst/extdata/overview_DAPHNEG_locoF.png)
+
+![workflow-loco](images/overview_DAPHNEG_locoF.png)
+
+
 # Examples
 
 ## Add parameter to data collection
