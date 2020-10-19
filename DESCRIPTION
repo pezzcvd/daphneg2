@@ -16,7 +16,11 @@ Imports:
     MASS,
     filesstrings,
     dplyr,
-    ggplot2
+    ggplot2,
+    GenomicRanges,
+    IRanges,
+    S4Vectors,
+    rtracklayer
 Suggests: 
     testthat (>= 2.1.0),
     knitr,

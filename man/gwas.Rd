@@ -8,7 +8,8 @@ gwas(
   gemma.name,
   gw.input,
   gw.cv,
-  gw.annot,
+  gw.snp_annot,
+  gw.gen_annot,
   gw.cov = NULL,
   gw.loco = F,
   gw.miss = 0.05,
@@ -24,7 +25,9 @@ gwas(
 
 \item{gw.cv}{integer{1}. Number of covariates. Can be 0, 1 or 2 (in this case is meant >1).}
 
-\item{gw.annot}{annotation}
+\item{gw.snp_annot}{character{1}. Snp annotation file path.}
+
+\item{gw.gen_annot}{character{1}. Genome annotation file path.}
 
 \item{gw.cov}{character{1}. Covariate name, can be one specific covariate or "all". (defalut NULL)}
 

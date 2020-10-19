@@ -11,7 +11,8 @@
 #' @param gemma.name character{1}. Gemma executable name. Version or system may vary.
 #' @param gw.input character{1}. Parameter name, used as a prefix in the files of interest.
 #' @param gw.cv integer{1}. Number of covariates. Can be 0, 1 or 2 (in this case is meant >1).
-#' @param gw.annot annotation
+#' @param gw.snp_annot character{1}. Snp annotation file path.
+#' @param gw.gen_annot character{1}. Genome annotation file path.
 #' @param gw.cov character{1}. Covariate name, can be one specific covariate or "all". (defalut NULL)
 #' @param gw.loco boolean(1). Leave one chromosome out approach. (default FALSE)-.
 #' @param gw.pw character{1}. Output path. (default home folder).
@@ -24,7 +25,7 @@
 #' @import filesstrings
 #'
 #' @examples
-gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.loco = F,
+gwas = function(gemma.name, gw.input, gw.cv, gw.snp_annot, gw.gen_annot, gw.cov = NULL, gw.loco = F,
                 gw.miss = 0.05, gw.maf = 0.05, gw.kinship = "", gw.pw = normalizePath("~")) {
   #debug_msg("Starting gwas function. \n")
   # Loading updated dataset
@@ -71,7 +72,7 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.loco = 
 
 
   #GWAS
-  gemma(input_name, gemman, gw.cv, gw.annot, gw.miss, gw.maf, gw.kinship, gw.loco, gw.pw)
+  gemma(input_name, gemman, gw.cv, gw.snp_annot, gw.miss, gw.maf, gw.kinship, gw.loco, gw.pw)
 
 #  if (gw.cv > 0) {
 #    system(paste0(gemma, " -g ", gw.pw, "/geno_", input_name,
@@ -95,7 +96,7 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.annot, gw.cov = NULL, gw.loco = 
   #debug_msg("GWAS analysis completed. \n")
 
   # Adjusting P-values
-  adjust(input_name, gw.pw)
+  adjust(input_name, gw.gen_annot, gw.pw)
   #debug_msg("P-values adjusted \n")
 
   # Expanding results to tagged SNPs
