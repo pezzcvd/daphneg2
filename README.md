@@ -42,6 +42,12 @@ The GWAS analysis is carried out by the tool GEMMA (version 0.98.1).
 ### Workflow with leave-one-chromosome-out option (loco=T)"
 ![workflow](inst/extdata/overview_DAPHNEG_locoT.png)
 
+# External files (available at http://141.48.9.71/ )
+- gemma (from https://github.com/genetics-statistics/GEMMA)
+- geno_005_nonpruned.RData (genotypic information)
+- gemma_annot.csv (SNP annotation)
+- Araport11_GFF3_genes_transposons_201606.gff.gz (genome annotation)
+
 
 # Examples
 
