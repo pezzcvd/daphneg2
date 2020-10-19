@@ -39,7 +39,7 @@ The GWAS analysis is carried out by the tool GEMMA (version 0.98.1).
 ### Workflow including all chromosomes(loco=F)
 ![workflow](inst/extdata/overview_DAPHNEG_locoF.png)
 
-### Workflow with leave-one-chromosome-out option (loco=T)"
+### Workflow with leave-one-chromosome-out option (loco=T)
 ![workflow](inst/extdata/overview_DAPHNEG_locoT.png)
 
 # External files (available at http://141.48.9.71/ )
