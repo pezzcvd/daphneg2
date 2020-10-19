@@ -76,7 +76,7 @@ To install the package there are several options:
 
 
 # Data
-DAPHnE-G data repository consists of 7 tables (5 included in the package plus 2 external): a description of the ecotypes; a collection of environmental parameters and corresponding metadata; the phenotypic traits also with metadata. 
+DAPHnE-G data repository consists of 8 tables (5 included in the package plus 3 external): a description of the ecotypes; a collection of environmental parameters and corresponding metadata; the phenotypic traits also with metadata. 
 
 - Ecotypes
 - Environmental parameters
@@ -88,6 +88,7 @@ The external ones: genotypic information (SNP occurrence matrix) and an addition
 
 - Genotypic information (SNP occurrence matrix)
 - Gemma annotation (SNP chromosome and position)
+- *A.thaliana* annotation
 
 The latter tables can be downloaded from the address: http://141.48.9.71/ 
 
@@ -176,6 +177,7 @@ head(gemma_annot_example)
 ## External files and programs
 - gemma (from https://github.com/genetics-statistics/GEMMA)
 - gemma_annot.csv
+- Araport11_GFF3_genes_transposons_201606.gff.gz
 
 
 
