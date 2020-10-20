@@ -27,7 +27,7 @@
 #' @examples
 gwas = function(gemma.name, gw.input, gw.cv, gw.snp_annot, gw.gen_annot, gw.cov = NULL, gw.loco = F,
                 gw.miss = 0.05, gw.maf = 0.05, gw.kinship = "", gw.pw = normalizePath("~")) {
-  #debug_msg("Starting gwas function. \n")
+
   # Loading updated dataset
   load(paste0(gw.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
 
@@ -55,15 +55,11 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.snp_annot, gw.gen_annot, gw.cov 
 
   print(gw.cv)
 
-
-  # Looks for the path of gemma executable.
-  #gemman = list.files(path = gw.pw, pattern = gemma.name,
-   #                  recursive = T, full.names = T)[1]
+  # Sets gemma
   gemman = gemma.name
   print(gemman)
   input_name = paste0(gw.input, suf)
   print(input_name)
-
 
   # Kinship
   if (gw.kinship == "") {
@@ -74,34 +70,10 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.snp_annot, gw.gen_annot, gw.cov 
   #GWAS
   gemma(input_name, gemman, gw.cv, gw.snp_annot, gw.miss, gw.maf, gw.kinship, gw.loco, gw.pw)
 
-#  if (gw.cv > 0) {
-#    system(paste0(gemma, " -g ", gw.pw, "/geno_", input_name,
-#                  " -p  ", gw.pw, "/pheno_", input_name,
-#                  " -k  ", gw.pw, "/output/kinship_", input_name, ".cXX.txt",
-#                  " -c  ", gw.pw, "/covar_", input_name,
-#                  " -a  ", gw.annot,
-#                  " -miss ", gw.miss, " -maf ", gw.maf,
-#                  " -lmm 1 -o out_", input_name,
-#                  " -outdir ", gw.pw,"/output"))
-
-#  } else {
-#    system(paste0(gemma, " -g  ", gw.pw, "/geno_", input_name,
-#                  " -p  ", gw.pw, "/pheno_", input_name,
-#                  " -k  ", gw.pw, "/output/kinship_", input_name, ".cXX.txt",
-#                  " -a  ", gw.annot,
-#                  " -miss ", gw.miss, " -maf ", gw.maf,
-#                  " -lmm 1 -o out_", input_name,
-#                  " -outdir ", gw.pw,"/output"))
-#  }
-  #debug_msg("GWAS analysis completed. \n")
-
   # Adjusting P-values
   adjust(input_name, gw.gen_annot, gw.pw)
-  #debug_msg("P-values adjusted \n")
 
-  # Expanding results to tagged SNPs
-  #tagged_snps(input_name, tag.file, gw.pw)
-
+  # Managing output
   print("create res folder")
   # Files/folders management
   if (!dir.exists(paste0(gw.pw, "/daphneg_results"))){
@@ -119,8 +91,6 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.snp_annot, gw.gen_annot, gw.cov 
     res_folder = paste0(res_dir, "/", input_name,"_dir")
   }
 
-  #debug_msg("Results folder created \n")
-
   print("moving files")
   outfiles = list.files(path = paste0(gw.pw, "/output"), pattern = paste0(input_name), full.names = T)
   filesstrings::file.move(files = outfiles,
@@ -131,30 +101,5 @@ gwas = function(gemma.name, gw.input, gw.cv, gw.snp_annot, gw.gen_annot, gw.cov 
   filesstrings::file.move(files = outfiles,
                           destinations = res_folder, overwrite = T)
 
-  #filesstrings::file.move(files = paste0(gw.pw, "/pheno_", input_name),
-  #                        destinations = paste0(res_dir, "/", input_name, "_dir"))
-  #filesstrings::file.move(files = paste0(gw.pw, "/geno_", input_name),
-  #                        destinations = paste0(res_dir, "/", input_name, "_dir"))
-
-  #system(paste0("mv pheno_", input_name, " results/gwas/", input_name,"_dir"))
-  #system(paste0("mv geno_", input_name, " results/gwas/", input_name,"_dir"))
-#  if (gw.cv > 1) {
-#    filesstrings::file.move(files = paste0(gw.pw, "/model_", input_name),
-#                            destinations = paste0(res_dir, "/", input_name, "_dir"))
-    #system(paste0("mv model_", input_name, " results/gwas/", input_name,"_dir"))
-#  }
-#  if (gw.cv > 0) {
-#    filesstrings::file.move(files = paste0(gw.pw, "/covar_", input_name),
-#                            destinations = paste0(res_dir, "/", input_name, "_dir"))
-    #system(paste0("mv covar_", input_name, " results/gwas/", input_name,"_dir"))
-#  }
-
-  #out_files = list.files(path = gw.pw, pattern = "output", all.files = T, full.names = T)
-  #filesstrings::file.move(files = out_files,
-  #                        destinations = paste0(res_dir, "/", input_name, "_dir"))
-  #system(paste0("mv output results/gwas/", input_name,"_dir"))
-  #debug_msg("Moving all files in result folder \n")
-
-  #debug_msg("gwas function completed successfully \n")
   return()
 }

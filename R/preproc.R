@@ -68,7 +68,6 @@ preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.loco = F, pp.pw
 
       # Check that covariate table is a data.frame, covariate parameter is a string and
       # the parameter is either one of the columns in covariarte table or "all"
-      #checkmate::assert_character(x = pp.cvt, any.missing = F, len = 1)
       checkmate::assert_choice(x = pp.cvt, choices = c("all", colnames(pp.pheno)))
 
     }
@@ -84,7 +83,6 @@ preproc = function(pp.par, pp.option, pp.geno, pp.cvt = NULL, pp.loco = F, pp.pw
     # Those have to be checked in all cases
     # pheno table and parameter of interest (same as before)
     checkmate::assert_data_frame(x = pp.pheno)
-    #checkmate::assert_character(x = pp.par, any.missing = F, len = 1)
     checkmate::assert_choice(x = pp.par, choices = colnames(pp.pheno))
 
     # Call

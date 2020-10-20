@@ -19,13 +19,7 @@ kinship = function(k.input, k.gemma, k.loco = F, k.pw = normalizePath("~")) {
   checkmate::assert_string(x = k.gemma)
   checkmate::assert_string(x = k.pw)
 
-  # Looks for the path of gemma executable.
-  #/home/pejo/gemma-0.98.1-linux-static
-  #gemma = list.files(path = normalizePath("~"), pattern = gemma.name,
-  #                   recursive = T, full.names = T)[1]
-
   # Calls the gemma software in order to create the kinship matrix.
-
   if (k.loco == T) {
     for (c in 1:5) {
       print(paste0(k.gemma," -g ", k.pw, "/geno_notchr", c, "_", k.input,

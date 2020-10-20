@@ -1,7 +1,7 @@
 #' multivariate
 #'
 #' #' Internal intermediate function. Starts the preprocessing procedure for
-#' multivariate analysis. It differenciates between three possibilities (PxP, ExE, PxE),
+#' multivariate analysis. It differenciates among three possibilities (PxP, ExE, PxE),
 #' phenotype target and phenotype covariate; environmental target and environmental covariate and
 #' phenotypical target and environmental covariate respectively.
 #' The covariate vector is selected among two options as well, either specifying one covariate
@@ -33,10 +33,6 @@ multivariate = function(mv.input, mv.par, mv.pheno, genotype,  mv.div = F, mv.en
   checkmate::assert_data_frame(x = mv.env_altern, null.ok = T)
   checkmate::assert_character(x = mv.pw, any.missing = F, len = 1)
 
-  #noerr = paste0(mv.pw, "ciao")
-
-  #debug_msg("Starting multivariate function. \n")
-
   # Filtering phenotype
   # Retrieves the data corresponding to the correct parameter and removes NAs
   input.line = which(colnames(mv.pheno) %in% mv.input )
@@ -46,32 +42,22 @@ multivariate = function(mv.input, mv.par, mv.pheno, genotype,  mv.div = F, mv.en
   # PxE case needs a second table for covariates
   # if pxe define cov table
   if (mv.div) {
-    #debug_msg("Setting covariate table in case of pxe \n")
     mv.table = mv.env_altern
   } else {
     mv.table = mv.pheno
     # Remove param of interest from the table that will be used for covariates
-    #debug_msg("Removing parameter of interest from covariate table \n")
-
-    #debug_msg(paste0("Covariates table dimensions before filtering.
-    #                ", nrow(mv.table), "x", ncol(mv.table), " \n"))
     parn = which(colnames(mv.pheno) == mv.input)
     mv.table = mv.pheno[,-parn]
-    #debug_msg(paste0("Covariates table dimensions after filtering.
-    #                 ", nrow(mv.table), "x", ncol(mv.table), " \n"))
   }
 
   # check case one covariate
   if (mv.par != "all") {
-    #debug_msg(paste0("One covariate: ", mv.par, " \n"))
     oneCov(mv.input, mv.par, mv.table, mv.x, mv.xn, genotype, mv.loco, mv.pw)
 
     #check case more covariates --> linear model
   } else {
-    #debug_msg("More covariates \n")
     nCov(mv.input, mv.table, mv.x, mv.xn, genotype, mv.loco, mv.pw)
   }
 
-  #debug_msg("Multivariate function completed successfully \n")
   return()
 }

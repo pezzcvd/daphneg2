@@ -19,7 +19,7 @@
 normal = function(n.par) {
   # Control on input
   checkmate::assert_numeric(x = n.par, min.len = 2, max.len = 1131)
-  #n.par = n.par[!duplicated(n.par)]
+
   # Testing Normality (kolmogorov-smirnoff)
   # for each of the transformations the test checks whether p-value > 0.001
   m = mean(n.par)

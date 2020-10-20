@@ -1,6 +1,6 @@
 #' infos
 #'
-#' The function belongs to the dataset management part. It search a parameter of interest
+#' The function belongs to the dataset management part. It searches a parameter of interest
 #' (either phenotypical or environmental) against all the parameters already present in the
 #' collection. If the parameter is there the function returns all the information and metadata
 #' about this parameter. Otherwise it prints an error message and the user should first
@@ -27,11 +27,7 @@ infos = function(i.input, i.pw = normalizePath("~")) {
 
   # Control on function input
   checkmate::assert_string(x = i.input)
-  # POSSIBLY ADD A MESSAGE
   checkmate::assert_choice(x = i.input, choices = c(env_explain$ID, phn_explain$ID))
-  #debug_msg("Starting infos function \n")
-
-  #debug_msg(paste0("New input parameter: ", !i.input %in% c(env_explain$ID, phn_explain$ID)))
 
   # Sets ref to an empty data.frame
   ref = data.frame()
@@ -50,8 +46,6 @@ infos = function(i.input, i.pw = normalizePath("~")) {
   # Sets the right table to ref
   # Finds the index of the corresponding anetry in the file and displays it
   i.idx = which(ref$ID == i.input)
-  #print()
 
-  #debug_msg("Infos function completed sucessfully \n")
   return(ref[i.idx,])
 }

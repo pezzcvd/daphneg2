@@ -21,40 +21,26 @@
 univariate = function(uv.par, uv.pheno, genotype, uv.loco = F, uv.pw = normalizePath("~")) {
   # input controls
   checkmate::assert_character(x = uv.par, any.missing = F, len = 1)
-  #checkmate::assert_choice(x = uv.par, choices = c(env_explain$ID, phn_explain$ID), null.ok = F)
   checkmate::assert_data_frame(x = uv.pheno)
-  #checkmate::assert_choice(x = uv.pheno, choices = c(environmental, phenotypical), null.ok = F)
   checkmate::assert_character(x = uv.pw, any.missing = F, len = 1)
-
-  #debug_msg("Starting univariate function. \n")
 
   # Filtering phenotype
   # Retrieves the data corresponding to the correct parameter and removes NAs
   y = uv.pheno[,uv.par]
-  #debug_msg(paste0("Parameter dimensions before filtering. ", length(y), " \n"))
   acces = rownames(uv.pheno[!is.na(y),])
   y = y[ !is.na(y)]
-  #debug_msg(paste0("Parameter dimensions after filtering. ", length(y), " \n"))
 
-  #debug_msg("Checking normality \n")
   # Checks  that data are normally distributed
   y = suppressWarnings(normal(y))
 
   # Writing phenotype file
   write.table(y, paste(uv.pw,"/pheno_", uv.par, sep = ""), sep = "\n",
               row.names = F, col.names = F,quote = F)
-  #debug_msg("Phenotype file written \n")
-
-  # Genotype filtering
-  #debug_msg(paste0("Genotype table dimensions before filtering.
-  #                ", nrow(genotype), " X ", ncol(genotype), " \n"))
 
   #LOCO
   if (uv.loco == T) {
     for (c in 1:5) {
       col1 <- append(c("snpID", "alt", "ref"), acces)
-      #g1 <- genotype[substr(genotype$snpID, 4, 4) == i, colnames(genotype) %in% col1]
-      #g2 <- genotype[substr(genotype$snpID, 4, 4) != i, colnames(genotype) %in% col1]
       g1 <- genotype[substr(genotype$snpID, 4, 4) == c,colnames(genotype) %in% col1]
       g2 <- genotype[substr(genotype$snpID, 4, 4) != c,colnames(genotype) %in% col1]
 
@@ -67,15 +53,10 @@ univariate = function(uv.par, uv.pheno, genotype, uv.loco = F, uv.pw = normalize
   } else {
     col1 <- append(c("snpID", "alt", "ref"), acces)
     g1 <- genotype[,colnames(genotype) %in% col1]
-    #debug_msg(paste0("Genotype table dimensions after filtering.
-    #                ", nrow(g1), " X ", ncol(g1), " \n"))
 
     # Writing genotype file
     write.table(g1, paste(uv.pw,"/geno_", uv.par, sep = ""), sep = ", ",
                 row.names = F, col.names = F, quote = F)
-    #debug_msg("Phenotype file written \n")
-
-    #debug_msg("Univariate function completed successfully \n")
   }
 
   return()

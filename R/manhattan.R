@@ -19,12 +19,8 @@ manhattan = function(mh.par, mh.pw = normalizePath("~")) {
 
   # Setting the gwas result file path.
   fl = paste0(mh.pw, "/daphneg_results/", mh.par, "_dir/out_", mh.par, ".assoc.txt")
-  #fl = paste0("results/gwas/", mh.par, "_dir/output/out_", mh.par, ".assoc.txt")
   # Reading file.
   fl = read.delim(fl, stringsAsFactors = F)
-
-  # File content controls
-  #checkmate::assert_data_frame(x = fl, ncols = 14)
 
   # Parameters set up, we have three analysis (nonadj, by. bh)
   # and for each of them three thresholds.
@@ -65,8 +61,6 @@ manhattan = function(mh.par, mh.pw = normalizePath("~")) {
       #Then we need to prepare the X axis. Indeed we do not want to display the cumulative position of SNP in bp, but just show the chromosome name i$
       axisdf = don %>% dplyr::group_by(CHR) %>% dplyr::summarize(center=( max(BPcum) + min(BPcum) ) / 2 )
 
-      #png(paste0("results/gwas/", mh.par, "_dir/output/manhattan_", tit[i], ".png"))
-      #png("prova.png")
       ggplot2::ggplot(don, ggplot2::aes(x=BPcum, y=-log10(P))) + ggplot2::ggtitle(tit) +  ggplot2::labs(x = "Chromosome") +
 
         # Show all points
@@ -89,13 +83,9 @@ manhattan = function(mh.par, mh.pw = normalizePath("~")) {
           panel.grid.major.x = ggplot2::element_blank(),
           panel.grid.minor.x = ggplot2::element_blank()
         )
-      #dev.off()
-      #ggsave(paste0("plots/manhattan/", tit, "_manhattan.png"))
       ggplot2::ggsave(paste0(mh.pw, "/daphneg_results/", mh.par, "_dir/", tit, "_manhattan.png"))
-      #ggsave(paste0("results/gwas/", mh.par, "_dir/output/", tit, "_manhattan.png"))
-      #dev.off()
-
     }
   }
+
   return()
 }
