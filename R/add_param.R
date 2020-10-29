@@ -35,6 +35,15 @@
 #'
 add_param = function(ap.newparam,ap.metadata, ap.mode = F, ap.bk = normalizePath("~")) {
 
+  # Sets backup folder if needed, and loads the updated version of the dataset
+  if (!file.exists(paste0(pp.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))) {
+    bk = set_backup(ap.bk)
+  }
+
+  load(paste0(pp.pw, "/daphneg_backup_dataset/RData/complete_dataset.RData"))
+
+
+
   ### Checking type of analysis P or E
   # Set up of some default variables. (phenotyical analysis)
   old_table = phenotypical
@@ -112,8 +121,6 @@ add_param = function(ap.newparam,ap.metadata, ap.mode = F, ap.bk = normalizePath
   explain = rbind(explain, ap.metadata)
 
   # Print backups
-  bk = set_backup(ap.bk)
-
   today = gsub(" ", "_", Sys.time(),fixed = T)
   today = gsub(":", "-", today,fixed = T)
   if(!ap.mode) {
