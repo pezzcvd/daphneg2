@@ -91,29 +91,29 @@ The GWAS analysis is carried out by the tool GEMMA (version 0.98.1).
 ## Association study (univariate)
 ```{r}
 # Example with environmental data
-#' gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.annot = "inst/extdata/gemma_annot_example.csv")
+#' gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.snp_annot = "inst/extdata/gemma_annot_example.csv", gw.gen_annot = "inst/extdata/genome_annot_example.gff")
 ```
 
 ## Association study (univariate, leave-one-chromosome-out)
 ```{r}
 # Example with environmental data
-#' gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.annot = "inst/extdata/gemma_annot_example.csv", gw.loco = T)
+#' gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.snp_annot = "inst/extdata/gemma_annot_example.csv", gw.gen_annot = "inst/extdata/genome_annot_example.gff", gw.loco = T)
 ```
 
 ## Association study (univariate, precomputed kinship matrix)
 ```{r}
 # Example with environmental data
-#' gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.annot = "inst/extdata/gemma_annot_example.csv", gw.kinship = "inst/extdata/precomputed_kinship.txt")
+#' gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.snp_annot = "inst/extdata/gemma_annot_example.csv", gw.gen_annot = "inst/extdata/genome_annot_example.gff", gw.kinship = "inst/extdata/precomputed_kinship.txt")
 ```
 
 ## Association study (multivariate, one covariate)
 ```{r}
 # Example with environmental data
-#' gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 1, gw.annot = "inst/extdata/gemma_annot_example.csv", gw.cov = "ET")
+#' gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 1, gw.snp_annot = "inst/extdata/gemma_annot_example.csv", gw.gen_annot = "inst/extdata/genome_annot_example.gff", gw.cov = "ET")
 ```
 
 ## Association study (multivariate, n covariates)
 ```{r}
 # Example with environmental data
-#' gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 2, gw.annot = "inst/extdata/gemma_annot_example.csv", gw.cov = "all")
+#' gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 2, gw.snp_annot = "inst/extdata/gemma_annot_example.csv", gw.gen_annot = "inst/extdata/genome_annot_example.gff", gw.cov = "all")
 ```

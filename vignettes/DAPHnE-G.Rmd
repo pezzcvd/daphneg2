@@ -406,10 +406,10 @@ Some additional parameters are provided with a default value (that the user can 
 
 *examples*
 
-- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.annot = "inst/extdata/gemma_annot_example.csv")
-- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.annot = "inst/extdata/gemma_annot_example.csv", gw.kinship = "inst/extdata/precomputed_kinship.txt")
-- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 1, gw.annot = "inst/extdata/gemma_annot_example.csv",gw.cov = "ET")
-- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 2, gw.annot = "inst/extdata/gemma_annot_example.csv",gw.cov = "all")
+- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.snp_annot = "inst/extdata/gemma_annot_example.csv", gw.gen_annot = "inst/extdata/genome_annot_example.gff")
+- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 0, gw.snp_annot = "inst/extdata/gemma_annot_example.csv", gw.gen_annot = "inst/extdata/genome_annot_example.gff", gw.kinship = "inst/extdata/precomputed_kinship.txt")
+- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 1, gw.snp_annot = "inst/extdata/gemma_annot_example.csv", gw.gen_annot = "inst/extdata/genome_annot_example.gff", gw.cov = "ET")
+- gwas(gemma.name = "gemma-0.98.1-linux-static", gw.input = "CO_Spring", gw.cv = 2, gw.snp_annot = "inst/extdata/gemma_annot_example.csv", gw.gen_annot = "inst/extdata/genome_annot_example.gff", gw.cov = "all")
 
 *parameters*
 
