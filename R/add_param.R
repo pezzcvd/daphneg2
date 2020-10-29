@@ -118,6 +118,8 @@ add_param = function(ap.newparam,ap.metadata, ap.mode = F, ap.bk = normalizePath
   explain = rbind(explain, ap.metadata)
 
   # Print backups
+  bk = set_backup(ap.bk)
+
   today = gsub(" ", "_", Sys.time(),fixed = T)
   today = gsub(":", "-", today,fixed = T)
   if(!ap.mode) {
