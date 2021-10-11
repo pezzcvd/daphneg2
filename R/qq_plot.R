@@ -24,7 +24,7 @@ qq_plot = function(qq.par, qq.pw = normalizePath("~")){
   fl = read.delim(fl, stringsAsFactors = F)
 
   # File content controls
-  checkmate::assert_data_frame(x = fl, ncols = 14)
+  checkmate::assert_data_frame(x = fl, ncols = 16)
 
   tits = c("_nonadj", "_by", "_bh")
   now_pval = list()
